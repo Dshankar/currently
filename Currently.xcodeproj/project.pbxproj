@@ -21,6 +21,7 @@
 		F9EA4A1519D8C3C100AC2CFF /* Gotham-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9EA4A0D19D8C3C100AC2CFF /* Gotham-XLight.ttf */; };
 		F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */; };
 		F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */; };
+		F9EA4A1E19D8CDF900AC2CFF /* profile@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F9EA4A1D19D8CDF900AC2CFF /* profile@2x.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewController.m; sourceTree = "<group>"; };
 		F9EA4A1A19D8C9BC00AC2CFF /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
 		F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
+		F9EA4A1D19D8CDF900AC2CFF /* profile@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "profile@2x.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */,
 				F9EA4A1A19D8C9BC00AC2CFF /* UserCell.h */,
 				F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */,
+				F9EA4A1D19D8CDF900AC2CFF /* profile@2x.jpg */,
 				F9D3A3D719D8C0820000AD34 /* Images.xcassets */,
 				F9EA4A0519D8C3C100AC2CFF /* Fonts */,
 				F9D3A3CA19D8C0820000AD34 /* Supporting Files */,
@@ -235,6 +238,7 @@
 				F9EA4A1019D8C3C100AC2CFF /* Gotham-Book.ttf in Resources */,
 				F9EA4A1319D8C3C100AC2CFF /* Gotham-Thin.ttf in Resources */,
 				F9EA4A1519D8C3C100AC2CFF /* Gotham-XLight.ttf in Resources */,
+				F9EA4A1E19D8CDF900AC2CFF /* profile@2x.jpg in Resources */,
 				F9EA4A1119D8C3C100AC2CFF /* Gotham-Light.ttf in Resources */,
 				F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */,
 				F9EA4A1419D8C3C100AC2CFF /* Gotham-Ultra.ttf in Resources */,
