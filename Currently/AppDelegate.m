@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "StatusTableViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    StatusTableViewController *status = [[StatusTableViewController alloc] initWithNibName:nil bundle:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:status];
+    window.rootViewController = nav;
+    [window makeKeyAndVisible];
     return YES;
 }
 

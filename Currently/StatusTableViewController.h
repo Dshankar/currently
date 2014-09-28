@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  StatusTableViewController.h
 //  Currently
 //
 //  Created by Darshan Shankar on 9/28/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface StatusTableViewController : UITableViewController
 
 @end
-

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		F9D3A3CD19D8C0820000AD34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CC19D8C0820000AD34 /* main.m */; };
 		F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */; };
-		F9D3A3D319D8C0820000AD34 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3D219D8C0820000AD34 /* ViewController.m */; };
-		F9D3A3D619D8C0820000AD34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9D3A3D419D8C0820000AD34 /* Main.storyboard */; };
 		F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D3A3D719D8C0820000AD34 /* Images.xcassets */; };
 		F9D3A3E419D8C0820000AD34 /* CurrentlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3E319D8C0820000AD34 /* CurrentlyTests.m */; };
 		F9EA4A0E19D8C3C100AC2CFF /* Gotham-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9EA4A0619D8C3C100AC2CFF /* Gotham-Black.ttf */; };
@@ -21,6 +19,8 @@
 		F9EA4A1319D8C3C100AC2CFF /* Gotham-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9EA4A0B19D8C3C100AC2CFF /* Gotham-Thin.ttf */; };
 		F9EA4A1419D8C3C100AC2CFF /* Gotham-Ultra.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9EA4A0C19D8C3C100AC2CFF /* Gotham-Ultra.ttf */; };
 		F9EA4A1519D8C3C100AC2CFF /* Gotham-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9EA4A0D19D8C3C100AC2CFF /* Gotham-XLight.ttf */; };
+		F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */; };
+		F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +39,6 @@
 		F9D3A3CC19D8C0820000AD34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F9D3A3CE19D8C0820000AD34 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F9D3A3D119D8C0820000AD34 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F9D3A3D219D8C0820000AD34 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		F9D3A3D519D8C0820000AD34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F9D3A3D719D8C0820000AD34 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F9D3A3DD19D8C0820000AD34 /* CurrentlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrentlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D3A3E219D8C0820000AD34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,6 +51,10 @@
 		F9EA4A0B19D8C3C100AC2CFF /* Gotham-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Thin.ttf"; sourceTree = "<group>"; };
 		F9EA4A0C19D8C3C100AC2CFF /* Gotham-Ultra.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Ultra.ttf"; sourceTree = "<group>"; };
 		F9EA4A0D19D8C3C100AC2CFF /* Gotham-XLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-XLight.ttf"; sourceTree = "<group>"; };
+		F9EA4A1619D8C79300AC2CFF /* StatusTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewController.h; sourceTree = "<group>"; };
+		F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewController.m; sourceTree = "<group>"; };
+		F9EA4A1A19D8C9BC00AC2CFF /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
+		F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,9 +98,10 @@
 			children = (
 				F9D3A3CE19D8C0820000AD34 /* AppDelegate.h */,
 				F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */,
-				F9D3A3D119D8C0820000AD34 /* ViewController.h */,
-				F9D3A3D219D8C0820000AD34 /* ViewController.m */,
-				F9D3A3D419D8C0820000AD34 /* Main.storyboard */,
+				F9EA4A1619D8C79300AC2CFF /* StatusTableViewController.h */,
+				F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */,
+				F9EA4A1A19D8C9BC00AC2CFF /* UserCell.h */,
+				F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */,
 				F9D3A3D719D8C0820000AD34 /* Images.xcassets */,
 				F9EA4A0519D8C3C100AC2CFF /* Fonts */,
 				F9D3A3CA19D8C0820000AD34 /* Supporting Files */,
@@ -158,6 +160,7 @@
 				F9D3A3C319D8C0820000AD34 /* Sources */,
 				F9D3A3C419D8C0820000AD34 /* Frameworks */,
 				F9D3A3C519D8C0820000AD34 /* Resources */,
+				F9EA4A1919D8C90500AC2CFF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -228,7 +231,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9D3A3D619D8C0820000AD34 /* Main.storyboard in Resources */,
 				F9EA4A0F19D8C3C100AC2CFF /* Gotham-Bold.ttf in Resources */,
 				F9EA4A1019D8C3C100AC2CFF /* Gotham-Book.ttf in Resources */,
 				F9EA4A1319D8C3C100AC2CFF /* Gotham-Thin.ttf in Resources */,
@@ -250,12 +252,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		F9EA4A1919D8C90500AC2CFF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F9D3A3C319D8C0820000AD34 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9D3A3D319D8C0820000AD34 /* ViewController.m in Sources */,
+				F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */,
+				F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */,
 				F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */,
 				F9D3A3CD19D8C0820000AD34 /* main.m in Sources */,
 			);
@@ -278,17 +297,6 @@
 			targetProxy = F9D3A3DE19D8C0820000AD34 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		F9D3A3D419D8C0820000AD34 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F9D3A3D519D8C0820000AD34 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F9D3A3E519D8C0820000AD34 /* Debug */ = {
@@ -373,6 +381,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Currently/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -384,6 +393,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Currently/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
