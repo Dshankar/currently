@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F92E814519DA2F5C00C35AAC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E814419DA2F5C00C35AAC /* CoreData.framework */; };
+		F92E814719DA2F6700C35AAC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E814619DA2F6700C35AAC /* SystemConfiguration.framework */; };
+		F92E814919DA2F7200C35AAC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E814819DA2F7200C35AAC /* libz.dylib */; };
+		F92E815519DA331000C35AAC /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */; };
+		F94DFDD719DB804400DC20AD /* UpdateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */; };
 		F9D3A3CD19D8C0820000AD34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CC19D8C0820000AD34 /* main.m */; };
 		F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */; };
 		F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D3A3D719D8C0820000AD34 /* Images.xcassets */; };
@@ -21,7 +26,6 @@
 		F9EA4A1519D8C3C100AC2CFF /* Gotham-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9EA4A0D19D8C3C100AC2CFF /* Gotham-XLight.ttf */; };
 		F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */; };
 		F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */; };
-		F9EA4A1E19D8CDF900AC2CFF /* profile@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F9EA4A1D19D8CDF900AC2CFF /* profile@2x.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F92E814419DA2F5C00C35AAC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F92E814619DA2F6700C35AAC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F92E814819DA2F7200C35AAC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		F92E814B19DA2FEB00C35AAC /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		F92E814C19DA2FEB00C35AAC /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		F92E814D19DA2FEB00C35AAC /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
+		F92E814E19DA2FEB00C35AAC /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
+		F92E814F19DA2FEB00C35AAC /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
+		F92E815019DA2FEB00C35AAC /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		F92E815119DA2FEB00C35AAC /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		F92E815219DA2FEB00C35AAC /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		F92E815319DA2FEB00C35AAC /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = Currently/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		F94DFDD519DB804400DC20AD /* UpdateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateTableViewController.h; sourceTree = "<group>"; };
+		F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateTableViewController.m; sourceTree = "<group>"; };
 		F9D3A3C719D8C0820000AD34 /* Currently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currently.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D3A3CB19D8C0820000AD34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9D3A3CC19D8C0820000AD34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -56,7 +75,6 @@
 		F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewController.m; sourceTree = "<group>"; };
 		F9EA4A1A19D8C9BC00AC2CFF /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
 		F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
-		F9EA4A1D19D8CDF900AC2CFF /* profile@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "profile@2x.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +82,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F92E814919DA2F7200C35AAC /* libz.dylib in Frameworks */,
+				F92E814719DA2F6700C35AAC /* SystemConfiguration.framework in Frameworks */,
+				F92E814519DA2F5C00C35AAC /* CoreData.framework in Frameworks */,
+				F92E815519DA331000C35AAC /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,9 +99,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F92E814A19DA2FEB00C35AAC /* GA */ = {
+			isa = PBXGroup;
+			children = (
+				F92E814B19DA2FEB00C35AAC /* GAI.h */,
+				F92E814C19DA2FEB00C35AAC /* GAIDictionaryBuilder.h */,
+				F92E814D19DA2FEB00C35AAC /* GAIEcommerceProduct.h */,
+				F92E814E19DA2FEB00C35AAC /* GAIEcommerceProductAction.h */,
+				F92E814F19DA2FEB00C35AAC /* GAIEcommercePromotion.h */,
+				F92E815019DA2FEB00C35AAC /* GAIFields.h */,
+				F92E815119DA2FEB00C35AAC /* GAILogger.h */,
+				F92E815219DA2FEB00C35AAC /* GAITrackedViewController.h */,
+				F92E815319DA2FEB00C35AAC /* GAITracker.h */,
+			);
+			path = GA;
+			sourceTree = "<group>";
+		};
 		F9D3A3BE19D8C0810000AD34 = {
 			isa = PBXGroup;
 			children = (
+				F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */,
+				F92E814819DA2F7200C35AAC /* libz.dylib */,
+				F92E814619DA2F6700C35AAC /* SystemConfiguration.framework */,
+				F92E814419DA2F5C00C35AAC /* CoreData.framework */,
 				F9D3A3C919D8C0820000AD34 /* Currently */,
 				F9D3A3E019D8C0820000AD34 /* CurrentlyTests */,
 				F9D3A3C819D8C0820000AD34 /* Products */,
@@ -102,10 +144,12 @@
 				F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */,
 				F9EA4A1619D8C79300AC2CFF /* StatusTableViewController.h */,
 				F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */,
+				F94DFDD519DB804400DC20AD /* UpdateTableViewController.h */,
+				F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */,
 				F9EA4A1A19D8C9BC00AC2CFF /* UserCell.h */,
 				F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */,
-				F9EA4A1D19D8CDF900AC2CFF /* profile@2x.jpg */,
 				F9D3A3D719D8C0820000AD34 /* Images.xcassets */,
+				F92E814A19DA2FEB00C35AAC /* GA */,
 				F9EA4A0519D8C3C100AC2CFF /* Fonts */,
 				F9D3A3CA19D8C0820000AD34 /* Supporting Files */,
 			);
@@ -203,6 +247,7 @@
 				TargetAttributes = {
 					F9D3A3C619D8C0820000AD34 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = 2B3L6C7XL3;
 					};
 					F9D3A3DC19D8C0820000AD34 = {
 						CreatedOnToolsVersion = 6.0;
@@ -238,7 +283,6 @@
 				F9EA4A1019D8C3C100AC2CFF /* Gotham-Book.ttf in Resources */,
 				F9EA4A1319D8C3C100AC2CFF /* Gotham-Thin.ttf in Resources */,
 				F9EA4A1519D8C3C100AC2CFF /* Gotham-XLight.ttf in Resources */,
-				F9EA4A1E19D8CDF900AC2CFF /* profile@2x.jpg in Resources */,
 				F9EA4A1119D8C3C100AC2CFF /* Gotham-Light.ttf in Resources */,
 				F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */,
 				F9EA4A1419D8C3C100AC2CFF /* Gotham-Ultra.ttf in Resources */,
@@ -280,6 +324,7 @@
 				F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */,
 				F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */,
 				F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */,
+				F94DFDD719DB804400DC20AD /* UpdateTableViewController.m in Sources */,
 				F9D3A3CD19D8C0820000AD34 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -384,9 +429,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Currently/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Currently",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -396,9 +447,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Currently/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Currently",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

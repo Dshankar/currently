@@ -10,4 +10,6 @@
 
 @interface StatusTableViewController : UITableViewController
 
+@property (nonatomic, retain) NSArray *profileData;
+
 @end

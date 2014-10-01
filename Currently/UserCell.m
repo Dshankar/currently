@@ -14,14 +14,18 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.profile = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-        [self.profile setImage:[UIImage imageNamed:@"profile@2x.jpg"]];
+        self.profile = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
         [self addSubview:self.profile];
         
-        self.status = [[UILabel alloc] initWithFrame:CGRectMake(140, 0, 100, 100)];
-        [self.status setText:@"Darshan is working."];
-        [self.status setFont:[UIFont fontWithName:@"Gotham-Medium" size:20.0f]];
+        self.status = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 190, 60)];
+        [self.status setNumberOfLines:2];
         [self addSubview:self.status];
+        
+        self.time = [[UILabel alloc] initWithFrame:CGRectMake(255, 0, 55, 60)];
+        [self.time setTextAlignment:NSTextAlignmentRight];
+        [self addSubview:self.time];
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
