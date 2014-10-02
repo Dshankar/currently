@@ -35,14 +35,6 @@
 }
 
 - (void)updateStatus:(id)sender {
-
-    UpdateStatusCell *verbCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    UpdateStatusCell *nounCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    UpdateStatusCell *locationCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-    NSString *verb = verbCell.textField.text;
-    NSString *noun = nounCell.textField.text;
-    NSString *location = locationCell.textField.text;
-    
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [data setObject:[defaults objectForKey:@"UDID"] forKey:@"name"];
@@ -53,22 +45,19 @@
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     [data setObject:currentTime forKey:@"time"];
 
-    if([verb length] == 0){
-        [data setObject:@"false" forKey:@"hasVerb"];
-    } else {
-        [data setObject:@"true" forKey:@"hasVerb"];
+    UpdateStatusCell *verbCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    UpdateStatusCell *nounCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    UpdateStatusCell *locationCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    NSString *verb = verbCell.textField.text;
+    NSString *noun = nounCell.textField.text;
+    NSString *location = locationCell.textField.text;
+    if(verb.length > 0) {
         [data setObject:verb forKey:@"verb"];
     }
-    if([noun length] == 0){
-        [data setObject:@"false" forKey:@"hasNoun"];
-    } else {
-        [data setObject:@"true" forKey:@"hasNoun"];
+    if(noun.length > 0) {
         [data setObject:noun forKey:@"noun"];
     }
-    if([location length] == 0){
-        [data setObject:@"false" forKey:@"hasLocation"];
-    } else {
-        [data setObject:@"true" forKey:@"hasLocation"];
+    if(location.length > 0) {
         [data setObject:location forKey:@"location"];
     }
     

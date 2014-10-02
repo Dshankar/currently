@@ -14,7 +14,9 @@
 #import "UpdateTableViewController.h"
 
 @interface StatusTableViewController ()
-
+{
+    NSIndexPath *indexPathOfSelectedRow;
+}
 @end
 
 @implementation StatusTableViewController
@@ -124,32 +126,33 @@
     [attrString appendAttributedString:name];
     NSAttributedString *is = [[NSAttributedString alloc] initWithString:@" is " attributes:bookAttribute];
     [attrString appendAttributedString:is];
-    
-    BOOL hasVerb = [[[self.profileData objectAtIndex:indexPath.row] objectForKey:@"hasVerb"] boolValue];
-    BOOL hasNoun = [[[self.profileData objectAtIndex:indexPath.row] objectForKey:@"hasNoun"] boolValue];
-    BOOL hasLocation = [[[self.profileData objectAtIndex:indexPath.row] objectForKey:@"hasLocation"] boolValue];
  
-    if(hasVerb){
-        NSString *myVerb = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"verb"];
+    NSString *myVerb = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"verb"];
+    if(myVerb.length > 0){
         NSAttributedString *verb = [[NSAttributedString alloc] initWithString:myVerb attributes:bookAttribute];
         [attrString appendAttributedString:verb];
     }
-    if(hasNoun){
-        NSString *myNoun = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"noun"];
+    NSString *myNoun = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"noun"];
+    if(myNoun.length > 0){
         NSAttributedString *noun = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", myNoun] attributes:mediumAttribute];
         [attrString appendAttributedString:noun];
     }
-    if(hasLocation){
+    NSString *myLocation = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"location"];
+    if(myLocation.length > 0){
         NSAttributedString *at = [[NSAttributedString alloc] initWithString:@" at " attributes:bookAttribute];
         [attrString appendAttributedString:at];
-        
-        NSString *myLocation = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"location"];
+
         NSAttributedString *location = [[NSAttributedString alloc] initWithString:myLocation attributes:mediumAttribute];
         [attrString appendAttributedString:location];
     }
     
     [attrString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [attrString.string length])];
     [cell.status setAttributedText:attrString];
+    
+    cell.imessage = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"imessage"];
+    cell.sms = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"sms"];
+    cell.facebook = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"facebook"];
+    cell.whatsapp = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"whatsapp"];
     
     NSString *myTime = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"time"];
     NSAttributedString *time = [[NSAttributedString alloc] initWithString:myTime attributes:timeAttribute];
@@ -161,6 +164,47 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    indexPathOfSelectedRow = indexPath;
+    UserCell *cell = (UserCell *)[tableView cellForRowAtIndexPath:indexPath];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Send a Message" preferredStyle:UIAlertControllerStyleActionSheet];
+    if(cell.imessage){
+        UIAlertAction *imessage = [UIAlertAction actionWithTitle:@"iMessage" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", cell.imessage]]];
+        }];
+        [alertController addAction:imessage];
+    }
+    if(cell.sms){
+        UIAlertAction *sms = [UIAlertAction actionWithTitle:@"SMS" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", cell.sms]]];
+        }];
+        [alertController addAction:sms];
+    }
+    if(cell.facebook){
+        UIAlertAction *fb = [UIAlertAction actionWithTitle:@"Facebook Messenger" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb-messenger://"]]){
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"fb-messenger://user-thread/%@", cell.facebook]]];
+            } else {
+                UIAlertController *cannotOpen = [UIAlertController alertControllerWithTitle:@"Oops!" message:@"Please install the Facebook Messenger app first!" preferredStyle:UIAlertControllerStyleAlert];
+                [cannotOpen addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                [self presentViewController:cannotOpen animated:YES completion:nil];
+            }
+        }];
+        [alertController addAction:fb];
+    }
+    if(cell.whatsapp){
+        UIAlertAction *whatsapp = [UIAlertAction actionWithTitle:@"Whatsapp" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", cell.whatsapp]]];
+        }];
+        [alertController addAction:whatsapp];
+    }
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end
