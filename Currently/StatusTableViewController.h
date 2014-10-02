@@ -12,5 +12,5 @@
 @interface StatusTableViewController : UITableViewController <StatusUpdatedProtocol>
 
 @property (nonatomic, retain) NSArray *profileData;
-
+- (void)applicationActive:(id)sender;
 @end

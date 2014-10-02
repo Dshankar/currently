@@ -26,6 +26,7 @@
     
     UIBarButtonItem *update = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateStatus:)];
     [self.navigationItem setRightBarButtonItem:update];
+    self.navigationItem.hidesBackButton = YES;
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView registerClass:[UserCell class] forCellReuseIdentifier:@"UserCell"];
@@ -47,15 +48,17 @@
     }
 }
 
-- (void)registerEngagement {
-    NSLog(@"register engagement");
+- (void)registerEngagement:(NSString *)userAction {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userName = [defaults objectForKey:@"UDID"];
+    NSLog(@"register engagement: %@ for user %@", userAction, userName);
+    
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Statuses Screen"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-    
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"engagement"
-                                                          action:@"open_app"
-                                                           label:nil
+                                                          action:userAction
+                                                           label:userName
                                                            value:nil] build]];
 }
 
@@ -69,11 +72,12 @@
 - (void)statusHasUpdated
 {
     [self updateData];
+    [self registerEngagement:@"updated_status"];
 }
 
 - (void)applicationActive:(id)sender {
     [self updateData];
-    [self registerEngagement];
+    [self registerEngagement:@"opened_app"];
 }
 
 - (void)didReceiveMemoryWarning {

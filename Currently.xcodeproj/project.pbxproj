@@ -12,6 +12,8 @@
 		F92E814919DA2F7200C35AAC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E814819DA2F7200C35AAC /* libz.dylib */; };
 		F92E815519DA331000C35AAC /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */; };
 		F94DFDD719DB804400DC20AD /* UpdateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */; };
+		F94DFDDA19DCF19500DC20AD /* SelectUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDD919DCF19500DC20AD /* SelectUserController.m */; };
+		F94DFDDD19DCFF9A00DC20AD /* UpdateStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDDC19DCFF9A00DC20AD /* UpdateStatusCell.m */; };
 		F9D3A3CD19D8C0820000AD34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CC19D8C0820000AD34 /* main.m */; };
 		F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */; };
 		F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D3A3D719D8C0820000AD34 /* Images.xcassets */; };
@@ -54,6 +56,10 @@
 		F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = Currently/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		F94DFDD519DB804400DC20AD /* UpdateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateTableViewController.h; sourceTree = "<group>"; };
 		F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateTableViewController.m; sourceTree = "<group>"; };
+		F94DFDD819DCF19400DC20AD /* SelectUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectUserController.h; sourceTree = "<group>"; };
+		F94DFDD919DCF19500DC20AD /* SelectUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectUserController.m; sourceTree = "<group>"; };
+		F94DFDDB19DCFF9A00DC20AD /* UpdateStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateStatusCell.h; sourceTree = "<group>"; };
+		F94DFDDC19DCFF9A00DC20AD /* UpdateStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateStatusCell.m; sourceTree = "<group>"; };
 		F9D3A3C719D8C0820000AD34 /* Currently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currently.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D3A3CB19D8C0820000AD34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9D3A3CC19D8C0820000AD34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -118,13 +124,13 @@
 		F9D3A3BE19D8C0810000AD34 = {
 			isa = PBXGroup;
 			children = (
+				F9D3A3C919D8C0820000AD34 /* Currently */,
+				F9D3A3E019D8C0820000AD34 /* CurrentlyTests */,
+				F9D3A3C819D8C0820000AD34 /* Products */,
 				F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */,
 				F92E814819DA2F7200C35AAC /* libz.dylib */,
 				F92E814619DA2F6700C35AAC /* SystemConfiguration.framework */,
 				F92E814419DA2F5C00C35AAC /* CoreData.framework */,
-				F9D3A3C919D8C0820000AD34 /* Currently */,
-				F9D3A3E019D8C0820000AD34 /* CurrentlyTests */,
-				F9D3A3C819D8C0820000AD34 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,10 +148,14 @@
 			children = (
 				F9D3A3CE19D8C0820000AD34 /* AppDelegate.h */,
 				F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */,
+				F94DFDD819DCF19400DC20AD /* SelectUserController.h */,
+				F94DFDD919DCF19500DC20AD /* SelectUserController.m */,
 				F9EA4A1619D8C79300AC2CFF /* StatusTableViewController.h */,
 				F9EA4A1719D8C79300AC2CFF /* StatusTableViewController.m */,
 				F94DFDD519DB804400DC20AD /* UpdateTableViewController.h */,
 				F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */,
+				F94DFDDB19DCFF9A00DC20AD /* UpdateStatusCell.h */,
+				F94DFDDC19DCFF9A00DC20AD /* UpdateStatusCell.m */,
 				F9EA4A1A19D8C9BC00AC2CFF /* UserCell.h */,
 				F9EA4A1B19D8C9BC00AC2CFF /* UserCell.m */,
 				F9D3A3D719D8C0820000AD34 /* Images.xcassets */,
@@ -321,11 +331,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F94DFDDA19DCF19500DC20AD /* SelectUserController.m in Sources */,
 				F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */,
 				F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */,
 				F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */,
 				F94DFDD719DB804400DC20AD /* UpdateTableViewController.m in Sources */,
 				F9D3A3CD19D8C0820000AD34 /* main.m in Sources */,
+				F94DFDDD19DCFF9A00DC20AD /* UpdateStatusCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 //
 
 #import "UpdateTableViewController.h"
+#import "UpdateStatusCell.h"
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
@@ -25,6 +26,8 @@
     
     UIBarButtonItem *submit = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStylePlain target:self action:@selector(updateStatus:)];
     [self.navigationItem setRightBarButtonItem:submit];
+    
+    [self.tableView registerClass:[UpdateStatusCell class] forCellReuseIdentifier:@"UpdateStatusCell"];
 }
 
 - (void)dismissView:(id)sender {
@@ -32,35 +35,41 @@
 }
 
 - (void)updateStatus:(id)sender {
-    BOOL hasVerb = YES;
-    BOOL hasLocation = YES;
-    BOOL hasNoun = NO;
-    
-    NSString *verb = @"working";
-    NSString *location = @"Au Coquelet";
-    NSString *noun = nil;
+
+    UpdateStatusCell *verbCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    UpdateStatusCell *nounCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    UpdateStatusCell *locationCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    NSString *verb = verbCell.textField.text;
+    NSString *noun = nounCell.textField.text;
+    NSString *location = locationCell.textField.text;
     
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
-    [data setObject:@"Darshan" forKey:@"name"];
-    [data setObject:@"5:45pm" forKey:@"time"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [data setObject:[defaults objectForKey:@"UDID"] forKey:@"name"];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    [data setObject:currentTime forKey:@"time"];
 
-    if(hasVerb){
+    if([verb length] == 0){
+        [data setObject:@"false" forKey:@"hasVerb"];
+    } else {
         [data setObject:@"true" forKey:@"hasVerb"];
         [data setObject:verb forKey:@"verb"];
-    } else {
-        [data setObject:@"false" forKey:@"hasVerb"];
     }
-    if(hasLocation){
-        [data setObject:@"true" forKey:@"hasLocation"];
-        [data setObject:location forKey:@"location"];
+    if([noun length] == 0){
+        [data setObject:@"false" forKey:@"hasNoun"];
     } else {
-        [data setObject:@"false" forKey:@"hasLocation"];
-    }
-    if(hasNoun){
         [data setObject:@"true" forKey:@"hasNoun"];
         [data setObject:noun forKey:@"noun"];
+    }
+    if([location length] == 0){
+        [data setObject:@"false" forKey:@"hasLocation"];
     } else {
-        [data setObject:@"false" forKey:@"hasNoun"];
+        [data setObject:@"true" forKey:@"hasLocation"];
+        [data setObject:location forKey:@"location"];
     }
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
@@ -71,13 +80,7 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
-    
-    
-    // print json:
-    NSLog(@"JSON summary: %@", [[NSString alloc] initWithData:jsonData
-                                                     encoding:NSUTF8StringEncoding]);
- 
-    
+
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [connection start];
 }
@@ -107,26 +110,39 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 3;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UpdateStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UpdateStatusCell" forIndexPath:indexPath];
+    if(cell == nil){
+        cell = [[UpdateStatusCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UpdateStatusCell"];
+    }
     
+    switch (indexPath.row) {
+        case 0:
+            [cell.label setText:@"Verb"];
+            [cell.textField setPlaceholder:@"ex. eating, sleeping"];
+            break;
+        case 1:
+            [cell.label setText:@"Noun"];
+            [cell.textField setPlaceholder:@"ex. a burger, a book"];
+            break;
+        case 2:
+            [cell.label setText:@"Location"];
+            [cell.textField setPlaceholder:@"ex. Home, Work"];
+            break;
+    }
     // Configure the cell...
     
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.
