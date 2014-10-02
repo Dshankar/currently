@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UpdateTableViewController.h"
 
-@interface StatusTableViewController : UITableViewController
+@interface StatusTableViewController : UITableViewController <StatusUpdatedProtocol>
 
 @property (nonatomic, retain) NSArray *profileData;
 

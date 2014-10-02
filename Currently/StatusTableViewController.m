@@ -35,7 +35,7 @@
 
 - (void)updateData {
     NSLog(@"updating data");
-    NSString *jsonUrl = @"http://currently-data.herokuapp.com/data.json";
+    NSString *jsonUrl = @"http://currently-data.herokuapp.com/data";
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:jsonUrl]];
     NSError *error;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
@@ -61,7 +61,14 @@
 
 - (void)updateStatus:(id)sender {
     UpdateTableViewController *updateController = [[UpdateTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    [self.navigationController pushViewController:updateController animated:YES];
+    updateController.delegate = self;
+    UINavigationController *updateNav = [[UINavigationController alloc] initWithRootViewController:updateController];
+    [self.navigationController presentViewController:updateNav animated:YES completion:nil];
+}
+
+- (void)statusHasUpdated
+{
+    [self updateData];
 }
 
 - (void)applicationActive:(id)sender {

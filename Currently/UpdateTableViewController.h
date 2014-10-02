@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol StatusUpdatedProtocol <NSObject>
+@required
+- (void)statusHasUpdated;
+@end
+
 @interface UpdateTableViewController : UITableViewController
+
+@property (nonatomic) id <StatusUpdatedProtocol>delegate;
 
 @end

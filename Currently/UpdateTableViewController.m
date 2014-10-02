@@ -7,9 +7,11 @@
 //
 
 #import "UpdateTableViewController.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface UpdateTableViewController ()
-
 @end
 
 @implementation UpdateTableViewController
@@ -18,7 +20,84 @@
     [super viewDidLoad];
 
     [self setTitle:@"Update Status"];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissView:)];
+    [self.navigationItem setLeftBarButtonItem:cancel];
+    
+    UIBarButtonItem *submit = [[UIBarButtonItem alloc] initWithTitle:@"Submit" style:UIBarButtonItemStylePlain target:self action:@selector(updateStatus:)];
+    [self.navigationItem setRightBarButtonItem:submit];
 }
+
+- (void)dismissView:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)updateStatus:(id)sender {
+    BOOL hasVerb = YES;
+    BOOL hasLocation = YES;
+    BOOL hasNoun = NO;
+    
+    NSString *verb = @"working";
+    NSString *location = @"Au Coquelet";
+    NSString *noun = nil;
+    
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:@"Darshan" forKey:@"name"];
+    [data setObject:@"5:45pm" forKey:@"time"];
+
+    if(hasVerb){
+        [data setObject:@"true" forKey:@"hasVerb"];
+        [data setObject:verb forKey:@"verb"];
+    } else {
+        [data setObject:@"false" forKey:@"hasVerb"];
+    }
+    if(hasLocation){
+        [data setObject:@"true" forKey:@"hasLocation"];
+        [data setObject:location forKey:@"location"];
+    } else {
+        [data setObject:@"false" forKey:@"hasLocation"];
+    }
+    if(hasNoun){
+        [data setObject:@"true" forKey:@"hasNoun"];
+        [data setObject:noun forKey:@"noun"];
+    } else {
+        [data setObject:@"false" forKey:@"hasNoun"];
+    }
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/update"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:jsonData];
+    
+    
+    // print json:
+    NSLog(@"JSON summary: %@", [[NSString alloc] initWithData:jsonData
+                                                     encoding:NSUTF8StringEncoding]);
+ 
+    
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+}
+
+- (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"Response %@", response);
+    if([(NSHTTPURLResponse *)response statusCode] == 200){
+        [self.delegate statusHasUpdated];
+        [self dismissView:nil];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Update Status Screen"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
