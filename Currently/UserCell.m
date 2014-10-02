@@ -21,7 +21,7 @@
         [self.status setNumberOfLines:2];
         [self addSubview:self.status];
         
-        self.time = [[UILabel alloc] initWithFrame:CGRectMake(255, 0, 55, 60)];
+        self.time = [[UILabel alloc] initWithFrame:CGRectMake(250, 0, 60, 60)];
         [self.time setTextAlignment:NSTextAlignmentRight];
         [self addSubview:self.time];
         
