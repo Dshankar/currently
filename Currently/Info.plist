@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>129</string>
+	<string>147</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -39,6 +39,10 @@ Gotham-XLight.ttf</string>
 		<string>Gotham-Thin.ttf</string>
 		<string>Gotham-Ultra.ttf</string>
 		<string>Gotham-XLight.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

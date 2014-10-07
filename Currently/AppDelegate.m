@@ -21,11 +21,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    // clears NSUserDefaults for testing purposes
+//            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
     UINavigationController *nav;
-    
-//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:@"UDID"]) {
         StatusTableViewController *status = [[StatusTableViewController alloc] initWithNibName:nil bundle:nil];
@@ -48,6 +49,69 @@
     
     return YES;
 }
+
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    NSLog(@"didRegisterUserNotificationSettings");
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+{
+    //handle the actions
+    if ([identifier isEqualToString:@"declineAction"]){
+        NSLog(@"declineAction");
+    } else if ([identifier isEqualToString:@"answerAction"]){
+        NSLog(@"answerAction");
+    }
+}
+#endif
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"error registering for token: %@", error);
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@"registered for notifications");
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *originalToken = [defaults objectForKey:@"apnDeviceToken"];
+    if (!originalToken || ![originalToken isEqualToString:token]) {
+        [self updateServerWithNotificationsDeviceToken:token];
+        [defaults setObject:token forKey:@"apnDeviceToken"];
+    }
+}
+
+- (void) updateServerWithNotificationsDeviceToken:(NSString *)token {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSMutableDictionary *data = [NSMutableDictionary new];
+    [data setObject:[defaults objectForKey:@"UDID"] forKey:@"name"];
+    [data setObject:token forKey:@"apnDeviceToken"];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/devicetoken"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:jsonData];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+}
+
+- (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"Update Server APN Device Token Response %@", response);
+    if([(NSHTTPURLResponse *)response statusCode] == 200){
+        // do something?
+    }
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
