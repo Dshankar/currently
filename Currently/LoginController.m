@@ -97,7 +97,7 @@
             [cell.textField setText:@"dshankar"];
             break;
         case 1:
-            [cell.label setText:@"Noun"];
+            [cell.label setText:@"Password"];
             [cell.textField setPlaceholder:@"ex. mypassword"];
             [cell.textField setText:@"simplepassword"];
             break;
