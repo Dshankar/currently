@@ -1,14 +1,14 @@
 //
-//  UpdateStatusCell.m
+//  LoginCredentialCell.m
 //  Currently
 //
-//  Created by Darshan Shankar on 10/1/14.
+//  Created by Darshan Shankar on 10/10/14.
 //  Copyright (c) 2014 Darshan Shankar. All rights reserved.
 //
 
-#import "UpdateStatusCell.h"
+#import "LoginCredentialCell.h"
 
-@implementation UpdateStatusCell
+@implementation LoginCredentialCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -25,4 +25,5 @@
     }
     return self;
 }
+
 @end

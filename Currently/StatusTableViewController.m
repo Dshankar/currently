@@ -53,14 +53,22 @@
 
 - (void)updateData {
     NSLog(@"updating data");
-    NSString *jsonUrl = @"http://currently-data.herokuapp.com/data";
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:jsonUrl]];
     NSError *error;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/data"]];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    NSData *resdata = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
     if(error != nil){
         NSLog(@"error: %@", error);
     } else {
-        self.profileData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        self.profileData = [NSJSONSerialization JSONObjectWithData:resdata options:NSJSONReadingAllowFragments error:nil];
         [self.tableView reloadData];
     }
 }

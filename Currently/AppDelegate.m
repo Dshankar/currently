@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "SelectUserController.h"
+//#import "SelectUserController.h"
+#import "LoginController.h"
 #import "StatusTableViewController.h"
 #import "GAI.h"
 
@@ -22,9 +23,9 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    // clears NSUserDefaults for testing purposes
-//            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//     clears NSUserDefaults for testing purposes
+            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     UINavigationController *nav;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -32,7 +33,8 @@
         StatusTableViewController *status = [[StatusTableViewController alloc] initWithNibName:nil bundle:nil];
         nav = [[UINavigationController alloc] initWithRootViewController:status];
     } else {
-        SelectUserController *selectUser = [[SelectUserController alloc] initWithNibName:nil bundle:nil];
+//        SelectUserController *selectUser = [[SelectUserController alloc] initWithNibName:nil bundle:nil];
+        LoginController *selectUser = [[LoginController alloc] initWithNibName:nil bundle:nil];
         nav = [[UINavigationController alloc] initWithRootViewController:selectUser];
     }
     self.window.rootViewController = nav;

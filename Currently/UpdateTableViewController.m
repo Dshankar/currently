@@ -116,7 +116,7 @@
     
     switch (indexPath.row) {
         case 0:
-            [cell.label setText:@"Verb"];
+            [cell.label setText:@"What are you doing?"];
             [cell.textField setPlaceholder:@"ex. eating, sleeping"];
             break;
         case 1:
@@ -124,7 +124,7 @@
             [cell.textField setPlaceholder:@"ex. a burger, a book"];
             break;
         case 2:
-            [cell.label setText:@"Location"];
+            [cell.label setText:@"Where are you?"];
             [cell.textField setPlaceholder:@"ex. Home, Work"];
             break;
     }
