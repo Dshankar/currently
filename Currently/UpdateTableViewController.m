@@ -36,9 +36,6 @@
 
 - (void)updateStatus:(id)sender {
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [data setObject:[defaults objectForKey:@"UDID"] forKey:@"name"];
-    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
@@ -63,11 +60,13 @@
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/update"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];

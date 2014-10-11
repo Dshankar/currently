@@ -12,7 +12,6 @@
 		F92E814919DA2F7200C35AAC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E814819DA2F7200C35AAC /* libz.dylib */; };
 		F92E815519DA331000C35AAC /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */; };
 		F94DFDD719DB804400DC20AD /* UpdateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */; };
-		F94DFDDA19DCF19500DC20AD /* SelectUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDD919DCF19500DC20AD /* SelectUserController.m */; };
 		F94DFDDD19DCFF9A00DC20AD /* UpdateStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDDC19DCFF9A00DC20AD /* UpdateStatusCell.m */; };
 		F99CBF3F19E7CB150094A3C2 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = F99CBF3E19E7CB150094A3C2 /* LoginController.m */; };
 		F99CBF4219E7CC2C0094A3C2 /* LoginCredentialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F99CBF4119E7CC2C0094A3C2 /* LoginCredentialCell.m */; };
@@ -58,8 +57,6 @@
 		F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = Currently/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		F94DFDD519DB804400DC20AD /* UpdateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateTableViewController.h; sourceTree = "<group>"; };
 		F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateTableViewController.m; sourceTree = "<group>"; };
-		F94DFDD819DCF19400DC20AD /* SelectUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectUserController.h; sourceTree = "<group>"; };
-		F94DFDD919DCF19500DC20AD /* SelectUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectUserController.m; sourceTree = "<group>"; };
 		F94DFDDB19DCFF9A00DC20AD /* UpdateStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateStatusCell.h; sourceTree = "<group>"; };
 		F94DFDDC19DCFF9A00DC20AD /* UpdateStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateStatusCell.m; sourceTree = "<group>"; };
 		F99CBF3D19E7CB150094A3C2 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
@@ -130,8 +127,6 @@
 		F99CBF4319E7CC330094A3C2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				F94DFDD819DCF19400DC20AD /* SelectUserController.h */,
-				F94DFDD919DCF19500DC20AD /* SelectUserController.m */,
 				F99CBF3D19E7CB150094A3C2 /* LoginController.h */,
 				F99CBF3E19E7CB150094A3C2 /* LoginController.m */,
 				F99CBF4019E7CC2C0094A3C2 /* LoginCredentialCell.h */,
@@ -371,7 +366,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F99CBF4219E7CC2C0094A3C2 /* LoginCredentialCell.m in Sources */,
-				F94DFDDA19DCF19500DC20AD /* SelectUserController.m in Sources */,
 				F99CBF3F19E7CB150094A3C2 /* LoginController.m in Sources */,
 				F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */,
 				F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */,

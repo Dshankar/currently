@@ -51,6 +51,10 @@
     [data setObject:username.textField.text forKey:@"username"];
     [data setObject:password.textField.text forKey:@"password"];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:username.textField.text forKey:@"username"];
+    [defaults synchronize];
+    
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -76,7 +80,6 @@
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"Darshan" forKey:@"UDID"];
     [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
     [defaults synchronize];
     
@@ -94,7 +97,7 @@
         case 0:
             [cell.label setText:@"Username"];
             [cell.textField setPlaceholder:@"ex. mom"];
-            [cell.textField setText:@"dshankar"];
+            [cell.textField setText:@"darshan"];
             break;
         case 1:
             [cell.label setText:@"Password"];

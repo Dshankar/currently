@@ -53,8 +53,6 @@
 
 - (void)updateData {
     NSLog(@"updating data");
-    NSError *error;
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
     
@@ -64,18 +62,18 @@
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-    NSData *resdata = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
-    if(error != nil){
-        NSLog(@"error: %@", error);
-    } else {
-        self.profileData = [NSJSONSerialization JSONObjectWithData:resdata options:NSJSONReadingAllowFragments error:nil];
-        [self.tableView reloadData];
-    }
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    self.profileData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    [self.tableView reloadData];
 }
 
 - (void)registerEngagement:(NSString *)userAction {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userName = [defaults objectForKey:@"UDID"];
+    NSString *userName = [defaults objectForKey:@"username"];
     NSLog(@"register engagement: %@ for user %@", userAction, userName);
     
     id tracker = [[GAI sharedInstance] defaultTracker];

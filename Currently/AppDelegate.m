@@ -29,7 +29,9 @@
     
     UINavigationController *nav;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"UDID"]) {
+    
+    // TODO better check than 'username' to determine whether user is logged in. check whether access token is valid instead?
+    if ([defaults objectForKey:@"username"]) {
         StatusTableViewController *status = [[StatusTableViewController alloc] initWithNibName:nil bundle:nil];
         nav = [[UINavigationController alloc] initWithRootViewController:status];
     } else {
@@ -90,9 +92,9 @@
 
 - (void) updateServerWithNotificationsDeviceToken:(NSString *)token {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
+    NSString *accesstoken = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
+    
     NSMutableDictionary *data = [NSMutableDictionary new];
-    [data setObject:[defaults objectForKey:@"UDID"] forKey:@"name"];
     [data setObject:token forKey:@"apnDeviceToken"];
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
@@ -101,6 +103,7 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:accesstoken forHTTPHeaderField:@"Authorization"];
     [request setHTTPBody:jsonData];
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
