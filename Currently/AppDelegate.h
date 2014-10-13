@@ -11,7 +11,8 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (nonatomic, retain) NSURLConnection *updateDeviceTokenConnection;
+@property (nonatomic, retain) NSURLConnection *refreshTokenConnection;
 
 @end
 

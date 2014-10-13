@@ -58,7 +58,7 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/oauth/token"]];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -97,13 +97,13 @@
     switch (indexPath.row) {
         case 0:
             [cell.label setText:@"Username"];
-            [cell.textField setPlaceholder:@"ex. mom"];
-            [cell.textField setText:@"Darshan"];
+            [cell.textField setPlaceholder:@"ex. Mom"];
+//            [cell.textField setText:@"Darshan"];
             break;
         case 1:
             [cell.label setText:@"Password"];
-            [cell.textField setPlaceholder:@"ex. mypassword"];
-            [cell.textField setText:@"simplepassword"];
+            [cell.textField setPlaceholder:@"ex. password"];
+//            [cell.textField setText:@"simplepassword"];
             break;
     }
     return cell;

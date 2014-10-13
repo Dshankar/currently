@@ -23,8 +23,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
 //     clears NSUserDefaults for testing purposes
-            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     UINavigationController *nav;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -98,24 +98,63 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/devicetoken"]];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/devicetoken"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:accesstoken forHTTPHeaderField:@"Authorization"];
     [request setHTTPBody:jsonData];
     
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
+    self.updateDeviceTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self.updateDeviceTokenConnection start];
 }
 
 - (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"Update Server APN Device Token Response %@", response);
-    if([(NSHTTPURLResponse *)response statusCode] == 200){
-        // do something?
+    if(connection == self.updateDeviceTokenConnection){
+        int code = [(NSHTTPURLResponse *)response statusCode];
+        NSLog(@"Update Server APN Device Token Response %i", code);
+        if(code == 401){
+            [self refreshTokens];
+        }
     }
 }
 
+- (void)refreshTokens{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:@"refresh_token" forKey:@"grant_type"];
+    [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
+    [data setObject:@"abc123456" forKey:@"client_secret"];
+    [data setObject:[defaults objectForKey:@"refreshtoken"] forKey:@"refresh_token"];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:jsonData];
+    
+    self.refreshTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self.refreshTokenConnection start];
+}
+
+- (void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data {
+    if(connection == self.refreshTokenConnection){
+        NSError *error;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSLog(@"%@", dict);
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
+        [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
+        [defaults synchronize];
+        
+        NSString *token = [defaults objectForKey:@"apnDeviceToken"];
+        [self updateServerWithNotificationsDeviceToken:token];
+    }
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

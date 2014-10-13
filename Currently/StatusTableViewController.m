@@ -12,6 +12,7 @@
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
 #import "UpdateTableViewController.h"
+#include <math.h>
 
 @interface StatusTableViewController ()
 {
@@ -57,7 +58,7 @@
     NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/data"]];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/data"]];
     [request setHTTPMethod:@"GET"];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -89,7 +90,7 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/oauth/token"]];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -222,12 +223,10 @@
     
     NSString *serverUpdatedTime = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"time"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
-    
     NSDate *sourceDate = [dateFormatter dateFromString:serverUpdatedTime];
-    NSLog(@"SOURCE DATE: %@", sourceDate);
-    NSTimeInterval seconds = [sourceDate timeIntervalSinceNow];
+    NSTimeInterval seconds = [sourceDate timeIntervalSinceNow] * -1;
     
     NSString *myTime;
     if(seconds > 86400.0){
@@ -238,13 +237,13 @@
         myTime = [NSString stringWithFormat:@"%i/%i", month, day];
     } else if(seconds > 3600.0){
         // more than 60 minutes ago, display in HH'h'
-        myTime = [NSString stringWithFormat:@"%fh", (seconds/3600.0)];
+        myTime = [NSString stringWithFormat:@"%ih", (int)floor(seconds/3600.0)];
     } else if(seconds > 60.0){
         // more than 1 minute ago, display in MM'm'
-        myTime = [NSString stringWithFormat:@"%fm", (seconds/60.0)];
+        myTime = [NSString stringWithFormat:@"%im", (int)floor(seconds/60.0)];
     } else {
         // less than 1 minute, display in SS'm'
-        myTime = [NSString stringWithFormat:@"%fs", seconds];
+        myTime = [NSString stringWithFormat:@"%is", (int)floor(seconds)];
     }
             NSLog(@"It has been %f seconds. display: %@", seconds, myTime);
     

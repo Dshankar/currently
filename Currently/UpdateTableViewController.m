@@ -58,7 +58,7 @@
     NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/update"]];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/update"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
@@ -81,7 +81,7 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/oauth/token"]];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -153,7 +153,7 @@
     
     switch (indexPath.row) {
         case 0:
-            [cell.label setText:@"What are you doing?"];
+            [cell.label setText:@"Verb"];
             [cell.textField setPlaceholder:@"ex. eating, sleeping"];
             break;
         case 1:
@@ -161,7 +161,7 @@
             [cell.textField setPlaceholder:@"ex. a burger, a book"];
             break;
         case 2:
-            [cell.label setText:@"Where are you?"];
+            [cell.label setText:@"Location"];
             [cell.textField setPlaceholder:@"ex. Home, Work"];
             break;
     }
