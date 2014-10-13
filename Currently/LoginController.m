@@ -81,6 +81,7 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
+    [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
     [defaults synchronize];
     
     StatusTableViewController *status = [[StatusTableViewController alloc] initWithNibName:nil bundle:nil];
@@ -97,7 +98,7 @@
         case 0:
             [cell.label setText:@"Username"];
             [cell.textField setPlaceholder:@"ex. mom"];
-            [cell.textField setText:@"darshan"];
+            [cell.textField setText:@"Darshan"];
             break;
         case 1:
             [cell.label setText:@"Password"];

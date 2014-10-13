@@ -62,13 +62,58 @@
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
+    self.updateDataConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self.updateDataConnection start];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    if(connection == self.updateDataConnection){
+        if([((NSHTTPURLResponse *)response) statusCode] == 401) {
+            // access token has expired, refresh with refresh token
+            [self refreshTokens];
+        }
+    } else if(connection == self.refreshTokenConnection){
+        
+    }
+}
+
+- (void)refreshTokens{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:@"refresh_token" forKey:@"grant_type"];
+    [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
+    [data setObject:@"abc123456" forKey:@"client_secret"];
+    [data setObject:[defaults objectForKey:@"refreshtoken"] forKey:@"refresh_token"];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/oauth/token"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:jsonData];
+    
+    self.refreshTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self.refreshTokenConnection start];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    self.profileData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    [self.tableView reloadData];
+    if(connection == self.updateDataConnection){
+        self.profileData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        [self.tableView reloadData];
+    } else if(connection == self.refreshTokenConnection){
+        NSError *error;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSLog(@"%@", dict);
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
+        [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
+        [defaults synchronize];
+        
+        [self updateData];
+    }
 }
 
 - (void)registerEngagement:(NSString *)userAction {
@@ -175,7 +220,34 @@
     cell.facebook = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"facebook"];
     cell.whatsapp = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"whatsapp"];
     
-    NSString *myTime = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"time"];
+    NSString *serverUpdatedTime = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"time"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+    
+    NSDate *sourceDate = [dateFormatter dateFromString:serverUpdatedTime];
+    NSLog(@"SOURCE DATE: %@", sourceDate);
+    NSTimeInterval seconds = [sourceDate timeIntervalSinceNow];
+    
+    NSString *myTime;
+    if(seconds > 86400.0){
+        // more than 24 hours ago, display Day abbreviated
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit fromDate:sourceDate];
+        NSInteger day = [components day];
+        NSInteger month = [components month];
+        myTime = [NSString stringWithFormat:@"%i/%i", month, day];
+    } else if(seconds > 3600.0){
+        // more than 60 minutes ago, display in HH'h'
+        myTime = [NSString stringWithFormat:@"%fh", (seconds/3600.0)];
+    } else if(seconds > 60.0){
+        // more than 1 minute ago, display in MM'm'
+        myTime = [NSString stringWithFormat:@"%fm", (seconds/60.0)];
+    } else {
+        // less than 1 minute, display in SS'm'
+        myTime = [NSString stringWithFormat:@"%fs", seconds];
+    }
+            NSLog(@"It has been %f seconds. display: %@", seconds, myTime);
+    
     NSAttributedString *time = [[NSAttributedString alloc] initWithString:myTime attributes:timeAttribute];
     [cell.time setAttributedText:time];
     

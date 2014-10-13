@@ -36,12 +36,6 @@
 
 - (void)updateStatus:(id)sender {
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
-    [data setObject:currentTime forKey:@"time"];
-
     UpdateStatusCell *verbCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     UpdateStatusCell *nounCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     UpdateStatusCell *locationCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
@@ -71,15 +65,57 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
 
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
+    self.updateStatusConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self.updateStatusConnection start];
+}
+
+- (void)refreshTokens{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:@"refresh_token" forKey:@"grant_type"];
+    [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
+    [data setObject:@"abc123456" forKey:@"client_secret"];
+    [data setObject:[defaults objectForKey:@"refreshtoken"] forKey:@"refresh_token"];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/oauth/token"]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:jsonData];
+    
+    self.refreshTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self.refreshTokenConnection start];
 }
 
 - (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"Response %@", response);
-    if([(NSHTTPURLResponse *)response statusCode] == 200){
-        [self.delegate statusHasUpdated];
-        [self dismissView:nil];
+    if(connection == self.updateStatusConnection){
+        if([(NSHTTPURLResponse *)response statusCode] == 200){
+            [self.delegate statusHasUpdated];
+            [self dismissView:nil];
+        } else if([((NSHTTPURLResponse *)response) statusCode] == 401) {
+            // access token has expired, refresh with refresh token
+            [self refreshTokens];
+        }
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    if(connection == self.updateStatusConnection){
+        // ?
+    } else if(connection == self.refreshTokenConnection){
+        NSError *error;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSLog(@"%@", dict);
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
+        [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
+        [defaults synchronize];
+        
+        [self updateStatus:nil];
     }
 }
 

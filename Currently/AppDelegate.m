@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-//#import "SelectUserController.h"
 #import "LoginController.h"
 #import "StatusTableViewController.h"
 #import "GAI.h"
@@ -99,7 +98,7 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/devicetoken"]];
+    [request setURL:[NSURL URLWithString:@"http://currently-test.herokuapp.com/devicetoken"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
