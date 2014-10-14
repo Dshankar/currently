@@ -15,8 +15,6 @@
 
 @interface UpdateTableViewController : UITableViewController
 
-@property (nonatomic, retain) NSURLConnection *updateStatusConnection;
-@property (nonatomic, retain) NSURLConnection *refreshTokenConnection;
 @property (nonatomic) id <StatusUpdatedProtocol>delegate;
 
 @end

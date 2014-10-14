@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginController.h"
-#import "StatusTableViewController.h"
+#import "SplashViewController.h"
+#import "NetworkManager.h"
 #import "GAI.h"
 
 @interface AppDelegate ()
@@ -26,19 +26,8 @@
 //            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
-    UINavigationController *nav;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    // TODO better check than 'username' to determine whether user is logged in. check whether access token is valid instead?
-    if ([defaults objectForKey:@"username"]) {
-        StatusTableViewController *status = [[StatusTableViewController alloc] initWithNibName:nil bundle:nil];
-        nav = [[UINavigationController alloc] initWithRootViewController:status];
-    } else {
-//        SelectUserController *selectUser = [[SelectUserController alloc] initWithNibName:nil bundle:nil];
-        LoginController *selectUser = [[LoginController alloc] initWithNibName:nil bundle:nil];
-        nav = [[UINavigationController alloc] initWithRootViewController:selectUser];
-    }
-    self.window.rootViewController = nav;
+    SplashViewController *splash = [[SplashViewController alloc] initWithNibName:nil bundle:nil];
+    self.window.rootViewController = splash;
     [self.window makeKeyAndVisible];
     
     // Optional: automatically send uncaught exceptions to Google Analytics.
@@ -85,75 +74,23 @@
     NSString *originalToken = [defaults objectForKey:@"apnDeviceToken"];
     if (!originalToken || ![originalToken isEqualToString:token]) {
         [self updateServerWithNotificationsDeviceToken:token];
-        [defaults setObject:token forKey:@"apnDeviceToken"];
     }
 }
 
 - (void) updateServerWithNotificationsDeviceToken:(NSString *)token {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *accesstoken = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
-    
-    NSMutableDictionary *data = [NSMutableDictionary new];
-    [data setObject:token forKey:@"apnDeviceToken"];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/devicetoken"]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:accesstoken forHTTPHeaderField:@"Authorization"];
-    [request setHTTPBody:jsonData];
-    
-    self.updateDeviceTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [self.updateDeviceTokenConnection start];
-}
-
-- (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
-    if(connection == self.updateDeviceTokenConnection){
-        int code = [(NSHTTPURLResponse *)response statusCode];
-        NSLog(@"Update Server APN Device Token Response %i", code);
+    NetworkManager *manager = [NetworkManager new];
+    [manager updateAPNDeviceToken:token completionHandler:^(int code, NSError *error) {
         if(code == 401){
-            [self refreshTokens];
+            [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
+                if(refreshCode == 200){
+                    [self updateServerWithNotificationsDeviceToken:token];
+                } // else, if we can't refresh tokens, do nothing. deal with this next time user logs in.
+            }];
+        } else if (code == 200){
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:token forKey:@"apnDeviceToken"];
         }
-    }
-}
-
-- (void)refreshTokens{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
-    [data setObject:@"refresh_token" forKey:@"grant_type"];
-    [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
-    [data setObject:@"abc123456" forKey:@"client_secret"];
-    [data setObject:[defaults objectForKey:@"refreshtoken"] forKey:@"refresh_token"];
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setHTTPBody:jsonData];
-    
-    self.refreshTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [self.refreshTokenConnection start];
-}
-
-- (void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data {
-    if(connection == self.refreshTokenConnection){
-        NSError *error;
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        NSLog(@"%@", dict);
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
-        [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
-        [defaults synchronize];
-        
-        NSString *token = [defaults objectForKey:@"apnDeviceToken"];
-        [self updateServerWithNotificationsDeviceToken:token];
-    }
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

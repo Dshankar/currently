@@ -11,6 +11,8 @@
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
+#import "NetworkManager.h"
+#import "LoginController.h"
 
 @interface UpdateTableViewController ()
 @end
@@ -51,72 +53,28 @@
     if(location.length > 0) {
         [data setObject:location forKey:@"location"];
     }
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/update"]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:token forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setHTTPBody:jsonData];
-
-    self.updateStatusConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [self.updateStatusConnection start];
+    [self publishUpdatedStatus:data];
 }
 
-- (void)refreshTokens{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
-    [data setObject:@"refresh_token" forKey:@"grant_type"];
-    [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
-    [data setObject:@"abc123456" forKey:@"client_secret"];
-    [data setObject:[defaults objectForKey:@"refreshtoken"] forKey:@"refresh_token"];
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setHTTPBody:jsonData];
-    
-    self.refreshTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [self.refreshTokenConnection start];
-}
-
-- (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
-    if(connection == self.updateStatusConnection){
-        if([(NSHTTPURLResponse *)response statusCode] == 200){
+- (void) publishUpdatedStatus:(NSDictionary *)data{
+    NetworkManager *manager = [NetworkManager new];
+    [manager updateStatus:data completionHandler:^(int code, NSError *error) {
+        if(code == 200){
             [self.delegate statusHasUpdated];
-            [self dismissView:nil];
-        } else if([((NSHTTPURLResponse *)response) statusCode] == 401) {
-            // access token has expired, refresh with refresh token
-            [self refreshTokens];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else if(code == 401){
+            [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
+                if(refreshCode == 200){
+                    [self publishUpdatedStatus:data];
+                } else if(refreshError){
+                    LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
+                    login.shouldDismissOnSuccess = YES;
+                    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
+                    [self presentViewController:loginNav animated:YES completion:nil];
+                }
+            }];
         }
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    if(connection == self.updateStatusConnection){
-        // ?
-    } else if(connection == self.refreshTokenConnection){
-        NSError *error;
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        NSLog(@"%@", dict);
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
-        [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
-        [defaults synchronize];
-        
-        [self updateStatus:nil];
-    }
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -136,12 +94,10 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
     return 3;
 }
 
@@ -150,7 +106,6 @@
     if(cell == nil){
         cell = [[UpdateStatusCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UpdateStatusCell"];
     }
-    
     switch (indexPath.row) {
         case 0:
             [cell.label setText:@"Verb"];
@@ -165,8 +120,6 @@
             [cell.textField setPlaceholder:@"ex. Home, Work"];
             break;
     }
-    // Configure the cell...
-    
     return cell;
 }
 

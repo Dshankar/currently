@@ -13,6 +13,8 @@
 #import "GAIDictionaryBuilder.h"
 #import "UpdateTableViewController.h"
 #include <math.h>
+#import "LoginController.h"
+#import "NetworkManager.h"
 
 @interface StatusTableViewController ()
 {
@@ -21,6 +23,14 @@
 @end
 
 @implementation StatusTableViewController
+
+- (id) initWithProfileData:(NSArray *)data{
+    self = [super initWithStyle:UITableViewStylePlain];
+    if(self){
+        self.profileData = data;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,71 +62,6 @@
     }
 }
 
-- (void)updateData {
-    NSLog(@"updating data");
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/data"]];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:token forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    self.updateDataConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [self.updateDataConnection start];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    if(connection == self.updateDataConnection){
-        if([((NSHTTPURLResponse *)response) statusCode] == 401) {
-            // access token has expired, refresh with refresh token
-            [self refreshTokens];
-        }
-    } else if(connection == self.refreshTokenConnection){
-        
-    }
-}
-
-- (void)refreshTokens{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
-    [data setObject:@"refresh_token" forKey:@"grant_type"];
-    [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
-    [data setObject:@"abc123456" forKey:@"client_secret"];
-    [data setObject:[defaults objectForKey:@"refreshtoken"] forKey:@"refresh_token"];
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setHTTPBody:jsonData];
-    
-    self.refreshTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [self.refreshTokenConnection start];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    if(connection == self.updateDataConnection){
-        self.profileData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        [self.tableView reloadData];
-    } else if(connection == self.refreshTokenConnection){
-        NSError *error;
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        NSLog(@"%@", dict);
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
-        [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
-        [defaults synchronize];
-        
-        [self updateData];
-    }
-}
-
 - (void)registerEngagement:(NSString *)userAction {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userName = [defaults objectForKey:@"username"];
@@ -138,8 +83,7 @@
     [self.navigationController presentViewController:updateNav animated:YES completion:nil];
 }
 
-- (void)statusHasUpdated
-{
+- (void)statusHasUpdated {
     [self updateData];
     [self registerEngagement:@"updated_status"];
 }
@@ -147,6 +91,27 @@
 - (void)applicationActive:(id)sender {
     [self updateData];
     [self registerEngagement:@"opened_app"];
+}
+
+- (void) updateData {
+    NetworkManager *manager = [NetworkManager new];
+    [manager getLatestDataWithCompletionHandler:^(int code, NSError *error, NSArray *data) {
+        if(code == 200){
+            self.profileData = data;
+            [self.tableView reloadData];
+        } else if(code == 401){
+            [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
+                if(refreshCode == 200){
+                    [self updateData];
+                } else if(refreshError){
+                    LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
+                    login.shouldDismissOnSuccess = YES;
+                    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
+                    [self presentViewController:loginNav animated:YES completion:nil];
+                }
+            }];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -245,7 +210,6 @@
         // less than 1 minute, display in SS'm'
         myTime = [NSString stringWithFormat:@"%is", (int)floor(seconds)];
     }
-            NSLog(@"It has been %f seconds. display: %@", seconds, myTime);
     
     NSAttributedString *time = [[NSAttributedString alloc] initWithString:myTime attributes:timeAttribute];
     [cell.time setAttributedText:time];

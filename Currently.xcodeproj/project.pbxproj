@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F914DA2719EBCC6000467A49 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F914DA2619EBCC6000467A49 /* SplashViewController.m */; };
+		F914DA2C19EBD29200467A49 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F914DA2B19EBD29200467A49 /* NetworkManager.m */; };
 		F92E814519DA2F5C00C35AAC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E814419DA2F5C00C35AAC /* CoreData.framework */; };
 		F92E814719DA2F6700C35AAC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E814619DA2F6700C35AAC /* SystemConfiguration.framework */; };
 		F92E814919DA2F7200C35AAC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E814819DA2F7200C35AAC /* libz.dylib */; };
@@ -42,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F914DA2519EBCC6000467A49 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashViewController.h; sourceTree = "<group>"; };
+		F914DA2619EBCC6000467A49 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashViewController.m; sourceTree = "<group>"; };
+		F914DA2A19EBD29200467A49 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		F914DA2B19EBD29200467A49 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		F92E814419DA2F5C00C35AAC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F92E814619DA2F6700C35AAC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F92E814819DA2F7200C35AAC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -108,6 +114,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F914DA2D19EBD68000467A49 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				F914DA2A19EBD29200467A49 /* NetworkManager.h */,
+				F914DA2B19EBD29200467A49 /* NetworkManager.m */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
 		F92E814A19DA2FEB00C35AAC /* GA */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +142,8 @@
 		F99CBF4319E7CC330094A3C2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				F914DA2519EBCC6000467A49 /* SplashViewController.h */,
+				F914DA2619EBCC6000467A49 /* SplashViewController.m */,
 				F99CBF3D19E7CB150094A3C2 /* LoginController.h */,
 				F99CBF3E19E7CB150094A3C2 /* LoginController.m */,
 				F99CBF4019E7CC2C0094A3C2 /* LoginCredentialCell.h */,
@@ -184,6 +201,7 @@
 			children = (
 				F9D3A3CE19D8C0820000AD34 /* AppDelegate.h */,
 				F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */,
+				F914DA2D19EBD68000467A49 /* Utility */,
 				F99CBF4319E7CC330094A3C2 /* Login */,
 				F99CBF4519E7CC500094A3C2 /* Statuses */,
 				F99CBF4419E7CC480094A3C2 /* Update */,
@@ -370,8 +388,10 @@
 				F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */,
 				F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */,
 				F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */,
+				F914DA2719EBCC6000467A49 /* SplashViewController.m in Sources */,
 				F94DFDD719DB804400DC20AD /* UpdateTableViewController.m in Sources */,
 				F9D3A3CD19D8C0820000AD34 /* main.m in Sources */,
+				F914DA2C19EBD29200467A49 /* NetworkManager.m in Sources */,
 				F94DFDDD19DCFF9A00DC20AD /* UpdateStatusCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,8 +12,8 @@
 @interface StatusTableViewController : UITableViewController <StatusUpdatedProtocol>
 
 @property (nonatomic, retain) NSArray *profileData;
-@property (nonatomic, retain) NSURLConnection *updateDataConnection;
-@property (nonatomic, retain) NSURLConnection *refreshTokenConnection;
 
+- (id) initWithProfileData:(NSArray *)data;
 - (void)applicationActive:(id)sender;
+    
 @end

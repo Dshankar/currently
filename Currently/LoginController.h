@@ -10,4 +10,6 @@
 
 @interface LoginController : UITableViewController
 
+@property (nonatomic) BOOL shouldDismissOnSuccess;
+
 @end
