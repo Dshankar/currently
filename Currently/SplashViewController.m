@@ -23,16 +23,17 @@
     [self setTitle:@"Welcome"];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NetworkManager *network = [NetworkManager new];
-
+//    NetworkManager *manager = [NetworkManager new];
+    NetworkManager *manager = [NetworkManager getInstance];
+    
     if ([defaults objectForKey:@"accesstoken"]) {
-        [network getLatestDataWithCompletionHandler:^(int code, NSError *error, NSArray *data) {
-            if(code == 200){
-                NSLog(@"getLatestData OK 200");
+        [manager getLatestDataWithCompletionHandler:^(int code, NSError *error, NSArray *data) {
+            if(error == nil){
+                NSLog(@"getLatestData OK %i", code);
                 [self showStatusesWithData:data];
-            } else if (code == 401){
-                NSLog(@"getLatestData error 401");
-                [network refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
+            } else if(code == 401 || error.code == -1012){
+                NSLog(@"getLatestData error 401/-1012");
+                [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
                     if (refreshCode == 200) {
                         [self showStatusesWithData:data];
                     } else {

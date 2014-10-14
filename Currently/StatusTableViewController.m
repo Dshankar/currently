@@ -45,7 +45,9 @@
     [self.tableView registerClass:[UserCell class] forCellReuseIdentifier:@"UserCell"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     [self registerForNotifications];
 }
 
@@ -94,16 +96,18 @@
 }
 
 - (void) updateData {
-    NetworkManager *manager = [NetworkManager new];
+    NetworkManager *manager = [NetworkManager getInstance];
+    
     [manager getLatestDataWithCompletionHandler:^(int code, NSError *error, NSArray *data) {
-        if(code == 200){
+        if(error == nil){
             self.profileData = data;
             [self.tableView reloadData];
-        } else if(code == 401){
+        } else if(code == 401 || error.code == -1012){
+            NSLog(@"Status getLatestData error 401/-1012");
             [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
                 if(refreshCode == 200){
                     [self updateData];
-                } else if(refreshError){
+                } else if(refreshCode == 403 || refreshError){
                     LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
                     login.shouldDismissOnSuccess = YES;
                     UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];

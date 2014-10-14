@@ -6,9 +6,31 @@
 //  Copyright (c) 2014 Darshan Shankar. All rights reserved.
 //
 
+/*
+ *
+ *  To determine request success, handlers should
+ *  check if error is nil instead of code==200 to satisfy
+ *  edge cases such as a 304 Not Modified code
+ *
+ */
+
+
 #import "NetworkManager.h"
 
 @implementation NetworkManager
+
+static NetworkManager *instance = nil;
+
++ (NetworkManager *) getInstance
+{
+    @synchronized(self){
+        if(instance == nil){
+            instance = [NetworkManager new];
+            instance.opqueue = [NSOperationQueue mainQueue];
+        }
+    }
+    return instance;
+}
 
 - (void)refreshTokensWithCompletionHandler: (void (^)(int, NSError*)) handler{
     NSLog(@"NMRefreshTokens");
@@ -29,12 +51,15 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
     
-    NSOperationQueue *queue = [NSOperationQueue new];
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//    NSOperationQueue *queue = [NSOperationQueue new];
+    [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
         if(error){
             handler(code, error);
-        } else {
+        } else if(code == 403){
+            // for some reason, error is nil here, even though 403 is an error code
+            handler(403, nil);
+        }else if(code == 200){
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
@@ -56,8 +81,8 @@
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-    NSOperationQueue *queue = [NSOperationQueue new];
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//    NSOperationQueue *queue = [NSOperationQueue new];
+    [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
         if(error){
             handler(code, error, nil);
@@ -83,8 +108,8 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
     
-    NSOperationQueue *queue = [NSOperationQueue new];
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//    NSOperationQueue *queue = [NSOperationQueue new];
+    [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
         if(error){
             handler(code, error);
@@ -112,8 +137,8 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
 
-    NSOperationQueue *queue = [NSOperationQueue new];
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *responseError) {
+//    NSOperationQueue *queue = [NSOperationQueue new];
+    [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *responseError) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
         if(responseError){
             handler(code, responseError);
@@ -147,8 +172,8 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:jsonData];
     
-    NSOperationQueue *queue = [NSOperationQueue new];
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *responseError) {
+//    NSOperationQueue *queue = [NSOperationQueue new];
+    [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *responseError) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
         if(responseError){
             handler(code, responseError);
@@ -175,8 +200,8 @@
     [request setValue:accesstoken forHTTPHeaderField:@"Authorization"];
     [request setHTTPBody:jsonData];
     
-    NSOperationQueue *queue = [NSOperationQueue new];
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//    NSOperationQueue *queue = [NSOperationQueue new];
+    [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
         if(error){
             handler(code, error);

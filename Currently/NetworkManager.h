@@ -17,4 +17,8 @@
 - (void) signupWithUsername:(NSString *)username password:(NSString *)password name:(NSString *)name completionHandler:(void (^)(int code, NSError *error))handler;
 - (void) updateAPNDeviceToken:(NSString *)token completionHandler: (void (^)(int code, NSError* error)) handler;
 
++ (NetworkManager *)getInstance;
+
+@property (nonatomic, retain) NSOperationQueue *opqueue;
+
 @end

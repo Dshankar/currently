@@ -36,7 +36,9 @@
     NSString *username = ((LoginCredentialCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).textField.text;
     NSString *password = ((LoginCredentialCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]]).textField.text;
     
-    NetworkManager *manager = [NetworkManager new];
+    //    NetworkManager *manager = [NetworkManager new];
+    NetworkManager *manager = [NetworkManager getInstance];
+    
     [manager signupWithUsername:username password:password name:name completionHandler:^(int code, NSError *registerError) {
         if(code == 200){
             [manager loginWithUsername:username password:password completionHandler:^(int loginCode, NSError *loginError) {
@@ -48,11 +50,11 @@
                     
                     // TODO if successfully logged in after a newly registered user, show onboarding flow
                     [manager getLatestDataWithCompletionHandler:^(int dataCode, NSError *dataError, NSArray *data) {
-                        if(dataCode == 200){
+                        if(dataError == nil){
                             StatusTableViewController *status = [[StatusTableViewController alloc] initWithProfileData:data];
                             [self.navigationController pushViewController:status animated:YES];
-                        } else if(dataError){
-                            NSLog(@"Error getting latest data for newly registered user, with Error:\n%@", dataError);
+                        } else {
+                            NSLog(@"Error getting latest data for newly registered user, code %i, with Error:\n%@", dataCode, dataError);
                         }
                      }];
                 } else if(loginError){

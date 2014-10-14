@@ -57,16 +57,19 @@
 }
 
 - (void) publishUpdatedStatus:(NSDictionary *)data{
-    NetworkManager *manager = [NetworkManager new];
+    //    NetworkManager *manager = [NetworkManager new];
+    NetworkManager *manager = [NetworkManager getInstance];
+
     [manager updateStatus:data completionHandler:^(int code, NSError *error) {
-        if(code == 200){
+        if(code == 200 || error == nil){
             [self.delegate statusHasUpdated];
             [self dismissViewControllerAnimated:YES completion:nil];
-        } else if(code == 401){
+        } else if(code == 401 || error.code == -1012){
+            NSLog(@"Update updateStatus error 401/-1012");
             [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
                 if(refreshCode == 200){
                     [self publishUpdatedStatus:data];
-                } else if(refreshError){
+                } else if(refreshCode == 403 || refreshError){
                     LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
                     login.shouldDismissOnSuccess = YES;
                     UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];

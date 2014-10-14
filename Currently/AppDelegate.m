@@ -81,7 +81,8 @@
 - (void) updateServerWithNotificationsDeviceToken:(NSString *)token {
     NetworkManager *manager = [NetworkManager new];
     [manager updateAPNDeviceToken:token completionHandler:^(int code, NSError *error) {
-        if(code == 401){
+        if(code == 401 || error.code == -1012){
+            NSLog(@"updateAPNDeviceToken error 401/-1012");
             [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
                 if(refreshCode == 200){
                     [self updateServerWithNotificationsDeviceToken:token];

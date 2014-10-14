@@ -36,24 +36,28 @@
     LoginCredentialCell *username = (LoginCredentialCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     LoginCredentialCell *password = (LoginCredentialCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     
-    NetworkManager *manager = [NetworkManager new];
+    //    NetworkManager *manager = [NetworkManager new];
+    NetworkManager *manager = [NetworkManager getInstance];
+    
     [manager loginWithUsername:username.textField.text password:password.textField.text completionHandler:^(int code, NSError *error) {
-        if(code == 200){
-            // this is used to track metrics
+        if(error == nil){
+            // this is used to track metrics. in future store this in Keychain securely?
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:username.textField.text forKey:@"username"];
+            [defaults setObject:password.textField.text forKey:@"password"];
             [defaults synchronize];
             
-            [manager getLatestDataWithCompletionHandler:^(int code, NSError *error, NSArray *data) {
-                if(code == 200){
-                    if(self.shouldDismissOnSuccess){
-                        [self dismissViewControllerAnimated:YES completion:nil];
-                    } else {
-                        StatusTableViewController *status = [[StatusTableViewController alloc] initWithProfileData:data];
-                        [self.navigationController pushViewController:status animated:YES];
-                    }
-                } // TODO if error?
-            }];
+            if(self.shouldDismissOnSuccess){
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                StatusTableViewController *status = [[StatusTableViewController alloc] initWithNibName:nil bundle:nil];
+                // consider calling getLatestData and instantiating
+                // StatusTableViewController with profile data
+                // user will immediately see their feed, instead of
+                // briefly seeing a blank page
+                [status applicationActive:nil];
+                [self.navigationController pushViewController:status animated:YES];
+            }
         }  // TODO if login error?
     }];
 }
@@ -72,16 +76,21 @@
     if(cell == nil){
         cell = [[LoginCredentialCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LoginCredentialCell"];
     }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     switch (indexPath.row) {
         case 0:
             [cell.label setText:@"Username"];
             [cell.textField setPlaceholder:@"ex. Mom"];
-//            [cell.textField setText:@"Darshan"];
+            if([defaults objectForKey:@"username"]){
+                [cell.textField setText:[defaults objectForKey:@"username"]];
+            }
             break;
         case 1:
             [cell.label setText:@"Password"];
             [cell.textField setPlaceholder:@"ex. password"];
-//            [cell.textField setText:@"D"];
+            if([defaults objectForKey:@"password"]){
+                [cell.textField setText:[defaults objectForKey:@"password"]];
+            }
             break;
     }
     return cell;
