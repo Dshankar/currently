@@ -8,6 +8,7 @@
 
 #import "SplashViewController.h"
 #import "LoginController.h"
+#import "SignupController.h"
 #import "StatusTableViewController.h"
 #import "NetworkManager.h"
 
@@ -19,10 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTitle:@"Welcome"];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NetworkManager *network = [NetworkManager new];
-    // TODO better check than 'username' to determine whether user is logged in. check whether access token is valid instead?
+
     if ([defaults objectForKey:@"accesstoken"]) {
         [network getLatestDataWithCompletionHandler:^(int code, NSError *error, NSArray *data) {
             if(code == 200){
@@ -63,18 +65,18 @@
     
     UIButton *signup = [[UIButton alloc] initWithFrame:CGRectMake(0, 400, 320, 80)];
     [signup setTitle:@"Sign up" forState:UIControlStateNormal];
-    [signup addTarget:self action:@selector(showLogin:) forControlEvents:UIControlEventTouchUpInside];
+    [signup addTarget:self action:@selector(showSignup:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:signup];
 }
 
 - (void)showLogin:(id)sender {
     LoginController *login = [[LoginController alloc] initWithStyle:UITableViewStylePlain];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-    [self presentViewController:nav animated:YES completion:nil];
+    [self.navigationController pushViewController:login animated:YES];
 }
 
 - (void)showSignup:(id)sender {
-    
+    SignupController *signup = [[SignupController alloc] initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:signup animated:YES];
 }
 
 @end

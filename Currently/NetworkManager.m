@@ -135,21 +135,21 @@
     }];
 }
 
-- (void) registerWithUsername:(NSString *)username password:(NSString *)password name:(NSString *)name completionHandler:(void (^)(int, NSError *))handler{
+- (void) signupWithUsername:(NSString *)username password:(NSString *)password name:(NSString *)name completionHandler:(void (^)(int code, NSError *error))handler{
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     [data setObject:@"password" forKey:@"grant_type"];
     [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
     [data setObject:@"abc123456" forKey:@"client_secret"];
     [data setObject:username forKey:@"username"];
     [data setObject:password forKey:@"password"];
+    [data setObject:name forKey:@"name"];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
+    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/register"]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
     
     NSOperationQueue *queue = [NSOperationQueue new];
@@ -158,12 +158,6 @@
         if(responseError){
             handler(code, responseError);
         } else if (code == 200){
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
-            [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
-            [defaults synchronize];
-            
             handler(code, nil);
         }
     }];
