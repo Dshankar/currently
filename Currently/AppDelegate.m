@@ -23,8 +23,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
 //     clears NSUserDefaults for testing purposes
-            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//            NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     SplashViewController *splash = [[SplashViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:splash];

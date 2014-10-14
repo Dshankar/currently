@@ -11,6 +11,7 @@
 @implementation NetworkManager
 
 - (void)refreshTokensWithCompletionHandler: (void (^)(int, NSError*)) handler{
+    NSLog(@"NMRefreshTokens");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
@@ -27,9 +28,6 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
-    
-//    self.refreshTokenConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    [self.refreshTokenConnection start];
     
     NSOperationQueue *queue = [NSOperationQueue new];
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -48,7 +46,7 @@
 }
 
 - (void) getLatestDataWithCompletionHandler: (void (^)(int code, NSError* error, NSArray* data)) handler{
-    NSLog(@"getting latest data");
+    NSLog(@"NMGetLatestData");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
     
@@ -58,9 +56,6 @@
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-//    self.updateDataConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    [self.updateDataConnection start];
-
     NSOperationQueue *queue = [NSOperationQueue new];
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
@@ -74,6 +69,7 @@
 }
 
 - (void)updateStatus:(NSDictionary *)data completionHandler: (void (^)(int, NSError*)) handler{
+    NSLog(@"NMUpdateStatus");
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -87,9 +83,6 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
     
-//    self.updateStatusConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    [self.updateStatusConnection start];
-    
     NSOperationQueue *queue = [NSOperationQueue new];
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
@@ -102,6 +95,7 @@
 }
 
 - (void) loginWithUsername:(NSString *)username password:(NSString *)password completionHandler:(void (^)(int, NSError *))handler{
+    NSLog(@"NMLogin");
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     [data setObject:@"password" forKey:@"grant_type"];
     [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
@@ -136,6 +130,7 @@
 }
 
 - (void) signupWithUsername:(NSString *)username password:(NSString *)password name:(NSString *)name completionHandler:(void (^)(int code, NSError *error))handler{
+    NSLog(@"NMSignup");
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
     [data setObject:@"password" forKey:@"grant_type"];
     [data setObject:@"currentlyiOSV1" forKey:@"client_id"];
@@ -164,6 +159,7 @@
 }
 
 - (void) updateAPNDeviceToken:(NSString *)token completionHandler: (void (^)(int code, NSError* error)) handler{
+    NSLog(@"NMUpdateAPNDeviceToken");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *accesstoken = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
     
@@ -189,63 +185,5 @@
         }
     }];
 }
-
-
-/*
-- (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response {
-    int code = [(NSHTTPURLResponse *)response statusCode];
-    
-    if(connection == self.updateStatusConnection){
-        if(code == 200){
-            [self.delegate statusHasUpdated];
-            [self dismissView:nil];
-        } else if(code == 401) {
-            // access token has expired, refresh with refresh token
-            [self refreshTokens];
-        }
-    } else if (connection == self.refreshTokenConnection){
-        if(code == 401){
-            LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
-            [self presentViewController:login animated:YES completion:nil];
-        }
-    }
-}
-
- - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
- if(connection == self.updateDataConnection){
- if([((NSHTTPURLResponse *)response) statusCode] == 401) {
- // access token has expired, refresh with refresh token
- [self refreshTokens];
- }
- } else if(connection == self.refreshTokenConnection){
- if([((NSHTTPURLResponse *)response) statusCode] == 401) {
- // refresh token isn't working, show login
- LoginController *selectUser = [[LoginController alloc] initWithNibName:nil bundle:nil];
- [self presentViewController:selectUser animated:YES completion:nil];
- }
- }
- }
- 
- 
- - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
- if(connection == self.updateDataConnection){
- 
- } else if(connection == self.refreshTokenConnection){
- 
- // THIS IS THE BUG. YOU SET REFRESH TOKEN TO NIL --> didReceiveResponse == error, but didReceiveData, data == nil.
- 
- NSLog(@"Refreshing tokens in StatusTableViewController");
- NSError *error;
- NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
- NSLog(@"%@", dict);
- NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
- [defaults setObject:[dict objectForKey:@"access_token"] forKey:@"accesstoken"];
- [defaults setObject:[dict objectForKey:@"refresh_token"] forKey:@"refreshtoken"];
- [defaults synchronize];
- 
- [self.delegate ];
- }
- } */
-
 
 @end

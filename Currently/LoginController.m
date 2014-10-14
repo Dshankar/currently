@@ -76,12 +76,12 @@
         case 0:
             [cell.label setText:@"Username"];
             [cell.textField setPlaceholder:@"ex. Mom"];
-            [cell.textField setText:@"Darshan"];
+//            [cell.textField setText:@"Darshan"];
             break;
         case 1:
             [cell.label setText:@"Password"];
             [cell.textField setPlaceholder:@"ex. password"];
-            [cell.textField setText:@"D"];
+//            [cell.textField setText:@"D"];
             break;
     }
     return cell;

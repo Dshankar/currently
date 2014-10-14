@@ -58,12 +58,16 @@
 }
 
 - (void) displayLoginOrSignup {
-    UIButton *login = [[UIButton alloc] initWithFrame:CGRectMake(0, 300, 320, 80)];
+    UIButton *login = [UIButton buttonWithType:UIButtonTypeCustom];
+    [login setFrame:CGRectMake(0, 300, 320, 80)];
+    [login setBackgroundColor:[UIColor greenColor]];
     [login setTitle:@"Log in" forState:UIControlStateNormal];
     [login addTarget:self action:@selector(showLogin:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:login];
     
-    UIButton *signup = [[UIButton alloc] initWithFrame:CGRectMake(0, 400, 320, 80)];
+    UIButton *signup = [UIButton buttonWithType:UIButtonTypeCustom];
+    [signup setFrame:CGRectMake(0, 400, 320, 80)];
+    [signup setBackgroundColor:[UIColor blueColor]];
     [signup setTitle:@"Sign up" forState:UIControlStateNormal];
     [signup addTarget:self action:@selector(showSignup:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:signup];
