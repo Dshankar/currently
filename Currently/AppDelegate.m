@@ -31,6 +31,7 @@
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     
+#ifndef DEBUG
     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
@@ -39,6 +40,7 @@
     [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelError];
     // Initialize tracker. Replace with your tracking ID.
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-55270322-1"];
+#endif
     
     return YES;
 }

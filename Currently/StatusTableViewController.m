@@ -64,7 +64,9 @@
     }
 }
 
+
 - (void)registerEngagement:(NSString *)userAction {
+#ifndef DEBUG
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userName = [defaults objectForKey:@"username"];
     NSLog(@"register engagement: %@ for user %@", userAction, userName);
@@ -76,6 +78,7 @@
                                                           action:userAction
                                                            label:userName
                                                            value:nil] build]];
+#endif
 }
 
 - (void)updateStatus:(id)sender {

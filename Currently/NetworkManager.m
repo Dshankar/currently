@@ -20,6 +20,11 @@
 @implementation NetworkManager
 
 static NetworkManager *instance = nil;
+#ifdef DEBUG
+NSString *serverURL = @"http://currently-test.herokuapp.com";
+#else
+NSString *serverURL = @"http://currently-data.herokuapp.com";
+#endif
 
 + (NetworkManager *) getInstance
 {
@@ -45,7 +50,7 @@ static NetworkManager *instance = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
+    [request setURL:[NSURL URLWithString:[NSString pathWithComponents:@[serverURL, @"oauth/token"]]]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -76,7 +81,7 @@ static NetworkManager *instance = nil;
     NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/data"]];
+    [request setURL:[NSURL URLWithString:[NSString pathWithComponents:@[serverURL, @"data"]]]];
     [request setHTTPMethod:@"GET"];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -101,7 +106,7 @@ static NetworkManager *instance = nil;
     NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/update"]];
+    [request setURL:[NSURL URLWithString:[NSString pathWithComponents:@[serverURL, @"update"]]]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:token forHTTPHeaderField:@"Authorization"];
@@ -131,7 +136,7 @@ static NetworkManager *instance = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/oauth/token"]];
+    [request setURL:[NSURL URLWithString:[NSString pathWithComponents:@[serverURL, @"oauth/token"]]]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -167,7 +172,7 @@ static NetworkManager *instance = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/register"]];
+    [request setURL:[NSURL URLWithString:[NSString pathWithComponents:@[serverURL, @"register"]]]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:jsonData];
@@ -193,7 +198,7 @@ static NetworkManager *instance = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://currently-data.herokuapp.com/devicetoken"]];
+    [request setURL:[NSURL URLWithString:[NSString pathWithComponents:@[serverURL, @"devicetoken"]]]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
