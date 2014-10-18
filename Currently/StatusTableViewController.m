@@ -15,10 +15,13 @@
 #include <math.h>
 #import "LoginController.h"
 #import "NetworkManager.h"
+#import "FFBadgedBarButtonItem.h"
+#import "InvitesController.h"
 
 @interface StatusTableViewController ()
 {
     NSIndexPath *indexPathOfSelectedRow;
+    FFBadgedBarButtonItem *friendInvites;
 }
 @end
 
@@ -35,11 +38,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setTitle:@"Currently"];
+//    [self setTitle:@"Currently"];
+    self.navigationController.navigationBar.barTintColor= [UIColor colorWithRed:(80.0/255) green:(205.0/255) blue:(153.0/255) alpha:1.0];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
-    UIBarButtonItem *update = [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStylePlain target:self action:@selector(updateStatus:)];
-    [self.navigationItem setRightBarButtonItem:update];
+    UIImage *updateImage = [UIImage imageNamed:@"edit"];
+    UIBarButtonItem *update = [[UIBarButtonItem alloc] initWithImage:updateImage style:UIBarButtonItemStyleDone target:self action:@selector(showUpdateStatus:)];
+    [update setTintColor:[UIColor whiteColor]];
+    
+    UIImage *addFriendImage = [UIImage imageNamed:@"addfriend"];
+    UIBarButtonItem *addFriend = [[UIBarButtonItem alloc] initWithImage:addFriendImage style:UIBarButtonItemStyleDone target:self action:@selector(showFriendInvites:)];
+    [addFriend setTintColor:[UIColor whiteColor]];
+    
+//    UIImage *settingsImage = [UIImage imageNamed:@"settings"];
+//    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStyleDone target:self action:@selector(showSettings:)];
+//    [settings setTintColor:[UIColor whiteColor]];
+    
+    [self.navigationItem setRightBarButtonItems:@[update]];
     self.navigationItem.hidesBackButton = YES;
+    [self.navigationItem setLeftBarButtonItem:addFriend];
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView registerClass:[UserCell class] forCellReuseIdentifier:@"UserCell"];
@@ -81,7 +98,17 @@
 #endif
 }
 
-- (void)updateStatus:(id)sender {
+- (void)showFriendInvites:(id)sender{
+    [friendInvites setBadge:nil];
+    InvitesController *invites = [[InvitesController alloc] init];
+    [self.navigationController pushViewController:invites animated:YES];
+}
+
+- (void)showSettings:(id)sender{
+    
+}
+
+- (void)showUpdateStatus:(id)sender {
     UpdateTableViewController *updateController = [[UpdateTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     updateController.delegate = self;
     UINavigationController *updateNav = [[UINavigationController alloc] initWithRootViewController:updateController];

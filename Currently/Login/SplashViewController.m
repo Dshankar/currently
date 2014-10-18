@@ -11,6 +11,8 @@
 #import "SignupController.h"
 #import "StatusTableViewController.h"
 #import "NetworkManager.h"
+#import "InvitesTableViewController.h"
+#import "SettingsTableViewController.h"
 
 @interface SplashViewController ()
 
@@ -55,7 +57,30 @@
 - (void)showStatusesWithData:(NSArray *)data {
     StatusTableViewController *status = [[StatusTableViewController alloc] initWithProfileData:data];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:status];
-    [self presentViewController:nav animated:YES completion:nil];
+    
+    InvitesTableViewController *pendingInvites = [[InvitesTableViewController alloc] initWithNibName:nil bundle:nil];
+    UINavigationController *nav2 = [[UINavigationController alloc] initWithRootViewController:pendingInvites];
+    
+    SettingsTableViewController *settings = [[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:settings];
+    
+    UITabBarController *tabBar = [[UITabBarController alloc] init];
+    tabBar.viewControllers = [NSArray arrayWithObjects:nav, nav2, nav3, nil];
+    
+    
+    UIImage *groupImage = [UIImage imageNamed:@"group"];
+    UIImage *settingsImage = [UIImage imageNamed:@"settings"];
+    
+    UITabBarItem *statusItem = [[UITabBarItem alloc] initWithTitle:@"Feed" image:nil tag:1];
+    UITabBarItem *pendingInvitesItem = [[UITabBarItem alloc] initWithTitle:@"Invites" image:groupImage tag:2];
+    UITabBarItem *settingsItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage tag:3];
+    [tabBar setToolbarItems:@[statusItem, pendingInvitesItem, settingsItem]];
+    
+    nav.tabBarItem = statusItem;
+    nav2.tabBarItem = pendingInvitesItem;
+    nav3.tabBarItem = settingsItem;
+
+    [self presentViewController:tabBar animated:YES completion:nil];
 }
 
 - (void) displayLoginOrSignup {
