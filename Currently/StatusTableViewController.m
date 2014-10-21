@@ -11,17 +11,16 @@
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
-#import "UpdateTableViewController.h"
+//#import "UpdateTableViewController.h"
+#import "UpdateController.h"
 #include <math.h>
 #import "LoginController.h"
 #import "NetworkManager.h"
-#import "FFBadgedBarButtonItem.h"
-#import "InvitesController.h"
+#import "AddFriendController.h"
 
 @interface StatusTableViewController ()
 {
     NSIndexPath *indexPathOfSelectedRow;
-    FFBadgedBarButtonItem *friendInvites;
 }
 @end
 
@@ -38,21 +37,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [self setTitle:@"Currently"];
-    self.navigationController.navigationBar.barTintColor= [UIColor colorWithRed:(80.0/255) green:(205.0/255) blue:(153.0/255) alpha:1.0];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     
     UIImage *updateImage = [UIImage imageNamed:@"edit"];
     UIBarButtonItem *update = [[UIBarButtonItem alloc] initWithImage:updateImage style:UIBarButtonItemStyleDone target:self action:@selector(showUpdateStatus:)];
-    [update setTintColor:[UIColor whiteColor]];
+    [update setTintColor:[UIColor grayColor]];
     
     UIImage *addFriendImage = [UIImage imageNamed:@"addfriend"];
-    UIBarButtonItem *addFriend = [[UIBarButtonItem alloc] initWithImage:addFriendImage style:UIBarButtonItemStyleDone target:self action:@selector(showFriendInvites:)];
-    [addFriend setTintColor:[UIColor whiteColor]];
-    
-//    UIImage *settingsImage = [UIImage imageNamed:@"settings"];
-//    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:settingsImage style:UIBarButtonItemStyleDone target:self action:@selector(showSettings:)];
-//    [settings setTintColor:[UIColor whiteColor]];
+    UIBarButtonItem *addFriend = [[UIBarButtonItem alloc] initWithImage:addFriendImage style:UIBarButtonItemStyleDone target:self action:@selector(showAddFriend:)];
+    [addFriend setTintColor:[UIColor grayColor]];
     
     [self.navigationItem setRightBarButtonItems:@[update]];
     self.navigationItem.hidesBackButton = YES;
@@ -98,18 +92,15 @@
 #endif
 }
 
-- (void)showFriendInvites:(id)sender{
-    [friendInvites setBadge:nil];
-    InvitesController *invites = [[InvitesController alloc] init];
-    [self.navigationController pushViewController:invites animated:YES];
-}
-
-- (void)showSettings:(id)sender{
-    
+- (void)showAddFriend:(id)sender{
+    AddFriendController *addFriendController = [[AddFriendController alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *addFriendNav = [[UINavigationController alloc] initWithRootViewController:addFriendController];
+    [self.navigationController presentViewController:addFriendNav animated:YES completion:nil];
 }
 
 - (void)showUpdateStatus:(id)sender {
-    UpdateTableViewController *updateController = [[UpdateTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+//    UpdateTableViewController *updateController = [[UpdateTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UpdateController *updateController = [[UpdateController alloc] init];
     updateController.delegate = self;
     UINavigationController *updateNav = [[UINavigationController alloc] initWithRootViewController:updateController];
     [self.navigationController presentViewController:updateNav animated:YES completion:nil];

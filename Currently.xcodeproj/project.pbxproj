@@ -14,8 +14,6 @@
 		F92E815519DA331000C35AAC /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F92E815419DA331000C35AAC /* libGoogleAnalyticsServices.a */; };
 		F94DFDD719DB804400DC20AD /* UpdateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */; };
 		F94DFDDD19DCFF9A00DC20AD /* UpdateStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F94DFDDC19DCFF9A00DC20AD /* UpdateStatusCell.m */; };
-		F9BFD42819F09F7000E55E9A /* FFBadgedBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD42619F09F7000E55E9A /* FFBadgedBarButtonItem.m */; };
-		F9BFD42919F09F7000E55E9A /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD42719F09F7000E55E9A /* LICENSE */; };
 		F9BFD43219F09F7800E55E9A /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD42B19F09F7800E55E9A /* LoginController.m */; };
 		F9BFD43319F09F7800E55E9A /* LoginCredentialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD42D19F09F7800E55E9A /* LoginCredentialCell.m */; };
 		F9BFD43419F09F7800E55E9A /* SignupController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD42F19F09F7800E55E9A /* SignupController.m */; };
@@ -23,11 +21,17 @@
 		F9BFD44819F0AD3800E55E9A /* edit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD44619F0AD3800E55E9A /* edit@2x.png */; };
 		F9BFD44C19F0AE9B00E55E9A /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD44B19F0AE9B00E55E9A /* settings@2x.png */; };
 		F9BFD44E19F0AF7500E55E9A /* group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD44D19F0AF7500E55E9A /* group@2x.png */; };
-		F9BFD45119F1103D00E55E9A /* InvitesController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD45019F1103C00E55E9A /* InvitesController.m */; };
 		F9BFD45519F1CA8D00E55E9A /* InvitesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD45419F1CA8D00E55E9A /* InvitesTableViewController.m */; };
-		F9BFD45819F1CAA900E55E9A /* InviteFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD45719F1CAA900E55E9A /* InviteFriendController.m */; };
 		F9BFD45B19F3304400E55E9A /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD45A19F3304400E55E9A /* SettingsTableViewController.m */; };
 		F9BFD46019F3355800E55E9A /* addfriend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD45F19F3355800E55E9A /* addfriend@2x.png */; };
+		F9BFD46419F338D800E55E9A /* notifications@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD46319F338D800E55E9A /* notifications@2x.png */; };
+		F9BFD46619F3390500E55E9A /* feed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD46519F3390500E55E9A /* feed@2x.png */; };
+		F9BFD46919F47ABC00E55E9A /* NotificationsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD46819F47ABC00E55E9A /* NotificationsController.m */; };
+		F9BFD46D19F47E5E00E55E9A /* AddFriendController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD46C19F47E5E00E55E9A /* AddFriendController.m */; };
+		F9BFD47019F4905F00E55E9A /* UpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD46F19F4905F00E55E9A /* UpdateController.m */; };
+		F9BFD47B19F5E06800E55E9A /* activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD47919F5E06800E55E9A /* activity@2x.png */; };
+		F9BFD47C19F5E06800E55E9A /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD47A19F5E06800E55E9A /* location@2x.png */; };
+		F9BFD47E19F5E77D00E55E9A /* text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD47D19F5E77D00E55E9A /* text@2x.png */; };
 		F9D3A3CD19D8C0820000AD34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CC19D8C0820000AD34 /* main.m */; };
 		F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */; };
 		F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D3A3D719D8C0820000AD34 /* Images.xcassets */; };
@@ -74,9 +78,6 @@
 		F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateTableViewController.m; sourceTree = "<group>"; };
 		F94DFDDB19DCFF9A00DC20AD /* UpdateStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateStatusCell.h; sourceTree = "<group>"; };
 		F94DFDDC19DCFF9A00DC20AD /* UpdateStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateStatusCell.m; sourceTree = "<group>"; };
-		F9BFD42519F09F7000E55E9A /* FFBadgedBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFBadgedBarButtonItem.h; path = FFBadgedBarButtonItem/FFBadgedBarButtonItem.h; sourceTree = "<group>"; };
-		F9BFD42619F09F7000E55E9A /* FFBadgedBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFBadgedBarButtonItem.m; path = FFBadgedBarButtonItem/FFBadgedBarButtonItem.m; sourceTree = "<group>"; };
-		F9BFD42719F09F7000E55E9A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = FFBadgedBarButtonItem/LICENSE; sourceTree = "<group>"; };
 		F9BFD42A19F09F7800E55E9A /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginController.h; path = Login/LoginController.h; sourceTree = "<group>"; };
 		F9BFD42B19F09F7800E55E9A /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginController.m; path = Login/LoginController.m; sourceTree = "<group>"; };
 		F9BFD42C19F09F7800E55E9A /* LoginCredentialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginCredentialCell.h; path = Login/LoginCredentialCell.h; sourceTree = "<group>"; };
@@ -88,15 +89,22 @@
 		F9BFD44619F0AD3800E55E9A /* edit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit@2x.png"; path = "../Images/edit@2x.png"; sourceTree = "<group>"; };
 		F9BFD44B19F0AE9B00E55E9A /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
 		F9BFD44D19F0AF7500E55E9A /* group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group@2x.png"; sourceTree = "<group>"; };
-		F9BFD44F19F1103C00E55E9A /* InvitesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitesController.h; sourceTree = "<group>"; };
-		F9BFD45019F1103C00E55E9A /* InvitesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitesController.m; sourceTree = "<group>"; };
 		F9BFD45319F1CA8D00E55E9A /* InvitesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitesTableViewController.h; sourceTree = "<group>"; };
 		F9BFD45419F1CA8D00E55E9A /* InvitesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitesTableViewController.m; sourceTree = "<group>"; };
-		F9BFD45619F1CAA900E55E9A /* InviteFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendController.h; sourceTree = "<group>"; };
-		F9BFD45719F1CAA900E55E9A /* InviteFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendController.m; sourceTree = "<group>"; };
 		F9BFD45919F3304400E55E9A /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		F9BFD45A19F3304400E55E9A /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		F9BFD45F19F3355800E55E9A /* addfriend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addfriend@2x.png"; sourceTree = "<group>"; };
+		F9BFD46319F338D800E55E9A /* notifications@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifications@2x.png"; sourceTree = "<group>"; };
+		F9BFD46519F3390500E55E9A /* feed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feed@2x.png"; sourceTree = "<group>"; };
+		F9BFD46719F47ABC00E55E9A /* NotificationsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsController.h; sourceTree = "<group>"; };
+		F9BFD46819F47ABC00E55E9A /* NotificationsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsController.m; sourceTree = "<group>"; };
+		F9BFD46B19F47E5E00E55E9A /* AddFriendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendController.h; sourceTree = "<group>"; };
+		F9BFD46C19F47E5E00E55E9A /* AddFriendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendController.m; sourceTree = "<group>"; };
+		F9BFD46E19F4905F00E55E9A /* UpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateController.h; sourceTree = "<group>"; };
+		F9BFD46F19F4905F00E55E9A /* UpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateController.m; sourceTree = "<group>"; };
+		F9BFD47919F5E06800E55E9A /* activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity@2x.png"; sourceTree = "<group>"; };
+		F9BFD47A19F5E06800E55E9A /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location@2x.png"; sourceTree = "<group>"; };
+		F9BFD47D19F5E77D00E55E9A /* text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text@2x.png"; sourceTree = "<group>"; };
 		F9D3A3C719D8C0820000AD34 /* Currently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currently.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D3A3CB19D8C0820000AD34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9D3A3CC19D8C0820000AD34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -147,7 +155,6 @@
 			children = (
 				F914DA2A19EBD29200467A49 /* NetworkManager.h */,
 				F914DA2B19EBD29200467A49 /* NetworkManager.m */,
-				F9BFD42419F09E9F00E55E9A /* FFBadgedBarButtonItem */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -188,6 +195,8 @@
 			children = (
 				F94DFDD519DB804400DC20AD /* UpdateTableViewController.h */,
 				F94DFDD619DB804400DC20AD /* UpdateTableViewController.m */,
+				F9BFD46E19F4905F00E55E9A /* UpdateController.h */,
+				F9BFD46F19F4905F00E55E9A /* UpdateController.m */,
 				F94DFDDB19DCFF9A00DC20AD /* UpdateStatusCell.h */,
 				F94DFDDC19DCFF9A00DC20AD /* UpdateStatusCell.m */,
 			);
@@ -205,20 +214,15 @@
 			name = Statuses;
 			sourceTree = "<group>";
 		};
-		F9BFD42419F09E9F00E55E9A /* FFBadgedBarButtonItem */ = {
-			isa = PBXGroup;
-			children = (
-				F9BFD42519F09F7000E55E9A /* FFBadgedBarButtonItem.h */,
-				F9BFD42619F09F7000E55E9A /* FFBadgedBarButtonItem.m */,
-				F9BFD42719F09F7000E55E9A /* LICENSE */,
-			);
-			name = FFBadgedBarButtonItem;
-			sourceTree = "<group>";
-		};
 		F9BFD44A19F0AD4200E55E9A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F9BFD47D19F5E77D00E55E9A /* text@2x.png */,
+				F9BFD47919F5E06800E55E9A /* activity@2x.png */,
+				F9BFD47A19F5E06800E55E9A /* location@2x.png */,
 				F9BFD45F19F3355800E55E9A /* addfriend@2x.png */,
+				F9BFD46519F3390500E55E9A /* feed@2x.png */,
+				F9BFD46319F338D800E55E9A /* notifications@2x.png */,
 				F9BFD44D19F0AF7500E55E9A /* group@2x.png */,
 				F9BFD44B19F0AE9B00E55E9A /* settings@2x.png */,
 				F9BFD44619F0AD3800E55E9A /* edit@2x.png */,
@@ -230,12 +234,10 @@
 		F9BFD45219F1C8E600E55E9A /* Friend Invites */ = {
 			isa = PBXGroup;
 			children = (
-				F9BFD44F19F1103C00E55E9A /* InvitesController.h */,
-				F9BFD45019F1103C00E55E9A /* InvitesController.m */,
 				F9BFD45319F1CA8D00E55E9A /* InvitesTableViewController.h */,
 				F9BFD45419F1CA8D00E55E9A /* InvitesTableViewController.m */,
-				F9BFD45619F1CAA900E55E9A /* InviteFriendController.h */,
-				F9BFD45719F1CAA900E55E9A /* InviteFriendController.m */,
+				F9BFD46B19F47E5E00E55E9A /* AddFriendController.h */,
+				F9BFD46C19F47E5E00E55E9A /* AddFriendController.m */,
 			);
 			name = "Friend Invites";
 			sourceTree = "<group>";
@@ -247,6 +249,15 @@
 				F9BFD45A19F3304400E55E9A /* SettingsTableViewController.m */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		F9BFD46A19F47ABF00E55E9A /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				F9BFD46719F47ABC00E55E9A /* NotificationsController.h */,
+				F9BFD46819F47ABC00E55E9A /* NotificationsController.m */,
+			);
+			name = Notifications;
 			sourceTree = "<group>";
 		};
 		F9D3A3BE19D8C0810000AD34 = {
@@ -280,6 +291,7 @@
 				F99CBF4319E7CC330094A3C2 /* Login */,
 				F99CBF4519E7CC500094A3C2 /* Statuses */,
 				F9BFD45219F1C8E600E55E9A /* Friend Invites */,
+				F9BFD46A19F47ABF00E55E9A /* Notifications */,
 				F9BFD45C19F3304900E55E9A /* Settings */,
 				F99CBF4419E7CC480094A3C2 /* Update */,
 				F9D3A3D719D8C0820000AD34 /* Images.xcassets */,
@@ -425,14 +437,18 @@
 				F9EA4A1319D8C3C100AC2CFF /* Gotham-Thin.ttf in Resources */,
 				F9EA4A1519D8C3C100AC2CFF /* Gotham-XLight.ttf in Resources */,
 				F9BFD44819F0AD3800E55E9A /* edit@2x.png in Resources */,
-				F9BFD42919F09F7000E55E9A /* LICENSE in Resources */,
+				F9BFD46419F338D800E55E9A /* notifications@2x.png in Resources */,
 				F9EA4A1119D8C3C100AC2CFF /* Gotham-Light.ttf in Resources */,
 				F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */,
+				F9BFD47B19F5E06800E55E9A /* activity@2x.png in Resources */,
+				F9BFD47C19F5E06800E55E9A /* location@2x.png in Resources */,
 				F9BFD44E19F0AF7500E55E9A /* group@2x.png in Resources */,
 				F9BFD46019F3355800E55E9A /* addfriend@2x.png in Resources */,
+				F9BFD46619F3390500E55E9A /* feed@2x.png in Resources */,
 				F9EA4A1419D8C3C100AC2CFF /* Gotham-Ultra.ttf in Resources */,
 				F9EA4A1219D8C3C100AC2CFF /* Gotham-Medium.ttf in Resources */,
 				F9EA4A0E19D8C3C100AC2CFF /* Gotham-Black.ttf in Resources */,
+				F9BFD47E19F5E77D00E55E9A /* text@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,19 +483,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9BFD45B19F3304400E55E9A /* SettingsTableViewController.m in Sources */,
+				F9BFD46D19F47E5E00E55E9A /* AddFriendController.m in Sources */,
 				F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */,
+				F9BFD46919F47ABC00E55E9A /* NotificationsController.m in Sources */,
+				F9BFD47019F4905F00E55E9A /* UpdateController.m in Sources */,
 				F9EA4A1819D8C79300AC2CFF /* StatusTableViewController.m in Sources */,
 				F9BFD45519F1CA8D00E55E9A /* InvitesTableViewController.m in Sources */,
 				F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */,
-				F9BFD45819F1CAA900E55E9A /* InviteFriendController.m in Sources */,
 				F9BFD43319F09F7800E55E9A /* LoginCredentialCell.m in Sources */,
 				F9BFD43219F09F7800E55E9A /* LoginController.m in Sources */,
 				F94DFDD719DB804400DC20AD /* UpdateTableViewController.m in Sources */,
 				F9D3A3CD19D8C0820000AD34 /* main.m in Sources */,
 				F9BFD43519F09F7800E55E9A /* SplashViewController.m in Sources */,
 				F9BFD43419F09F7800E55E9A /* SignupController.m in Sources */,
-				F9BFD45119F1103D00E55E9A /* InvitesController.m in Sources */,
-				F9BFD42819F09F7000E55E9A /* FFBadgedBarButtonItem.m in Sources */,
 				F914DA2C19EBD29200467A49 /* NetworkManager.m in Sources */,
 				F94DFDDD19DCFF9A00DC20AD /* UpdateStatusCell.m in Sources */,
 			);

@@ -32,7 +32,26 @@
     [self.tableView registerClass:[UpdateStatusCell class] forCellReuseIdentifier:@"UpdateStatusCell"];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    #ifndef DEBUG
+        id tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:@"Update Status Screen"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    #endif
+    
+    UpdateStatusCell *cell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [cell.textField becomeFirstResponder];
+}
+
 - (void)dismissView:(id)sender {
+    UpdateStatusCell *verbCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    UpdateStatusCell *nounCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    UpdateStatusCell *locationCell = (UpdateStatusCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    [verbCell.textField resignFirstResponder];
+    [nounCell.textField resignFirstResponder];
+    [locationCell.textField resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -79,18 +98,6 @@
         }
     }];
 }
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-#ifndef DEBUG
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:@"Update Status Screen"];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-#endif
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -13,6 +13,7 @@
 #import "NetworkManager.h"
 #import "InvitesTableViewController.h"
 #import "SettingsTableViewController.h"
+#import "NotificationsController.h"
 
 @interface SplashViewController ()
 
@@ -56,29 +57,40 @@
 
 - (void)showStatusesWithData:(NSArray *)data {
     StatusTableViewController *status = [[StatusTableViewController alloc] initWithProfileData:data];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:status];
+    UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:status];
     
     InvitesTableViewController *pendingInvites = [[InvitesTableViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *nav2 = [[UINavigationController alloc] initWithRootViewController:pendingInvites];
     
+    NotificationsController *notifications = [[NotificationsController alloc] init];
+    UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:notifications];
+    
     SettingsTableViewController *settings = [[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:settings];
+    UINavigationController *nav4 = [[UINavigationController alloc] initWithRootViewController:settings];
     
     UITabBarController *tabBar = [[UITabBarController alloc] init];
-    tabBar.viewControllers = [NSArray arrayWithObjects:nav, nav2, nav3, nil];
+    tabBar.viewControllers = [NSArray arrayWithObjects:nav1, nav2, nav3, nav4, nil];
     
-    
+    UIImage *feedImage = [UIImage imageNamed:@"feed"];
     UIImage *groupImage = [UIImage imageNamed:@"group"];
     UIImage *settingsImage = [UIImage imageNamed:@"settings"];
+    UIImage *notificationsImage = [UIImage imageNamed:@"notifications"];
     
-    UITabBarItem *statusItem = [[UITabBarItem alloc] initWithTitle:@"Feed" image:nil tag:1];
-    UITabBarItem *pendingInvitesItem = [[UITabBarItem alloc] initWithTitle:@"Invites" image:groupImage tag:2];
-    UITabBarItem *settingsItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage tag:3];
-    [tabBar setToolbarItems:@[statusItem, pendingInvitesItem, settingsItem]];
+    UITabBarItem *statusItem = [[UITabBarItem alloc] initWithTitle:@"Feed" image:feedImage tag:1];
+    UITabBarItem *pendingInvitesItem = [[UITabBarItem alloc] initWithTitle:@"Requests" image:groupImage tag:2];
+    UITabBarItem *notificationsItem = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationsImage tag:3];
+    [notificationsItem setBadgeValue:@"1"];
+    UITabBarItem *settingsItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage tag:4];
     
-    nav.tabBarItem = statusItem;
+    [tabBar setToolbarItems:@[statusItem, pendingInvitesItem, notificationsItem, settingsItem]];
+    [[UITabBar appearance] setTintColor:[UIColor grayColor]];
+    [[UITabBar appearance] setSelectedImageTintColor:[UIColor blackColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
+    
+    nav1.tabBarItem = statusItem;
     nav2.tabBarItem = pendingInvitesItem;
-    nav3.tabBarItem = settingsItem;
+    nav3.tabBarItem = notificationsItem;
+    nav4.tabBarItem = settingsItem;
 
     [self presentViewController:tabBar animated:YES completion:nil];
 }
