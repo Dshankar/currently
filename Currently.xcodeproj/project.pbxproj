@@ -32,6 +32,7 @@
 		F9BFD47B19F5E06800E55E9A /* activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD47919F5E06800E55E9A /* activity@2x.png */; };
 		F9BFD47C19F5E06800E55E9A /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD47A19F5E06800E55E9A /* location@2x.png */; };
 		F9BFD47E19F5E77D00E55E9A /* text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD47D19F5E77D00E55E9A /* text@2x.png */; };
+		F9BFD48019F5EE8900E55E9A /* activity-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD47F19F5EE8900E55E9A /* activity-active@2x.png */; };
 		F9D3A3CD19D8C0820000AD34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CC19D8C0820000AD34 /* main.m */; };
 		F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */; };
 		F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D3A3D719D8C0820000AD34 /* Images.xcassets */; };
@@ -105,6 +106,7 @@
 		F9BFD47919F5E06800E55E9A /* activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity@2x.png"; sourceTree = "<group>"; };
 		F9BFD47A19F5E06800E55E9A /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location@2x.png"; sourceTree = "<group>"; };
 		F9BFD47D19F5E77D00E55E9A /* text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text@2x.png"; sourceTree = "<group>"; };
+		F9BFD47F19F5EE8900E55E9A /* activity-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activity-active@2x.png"; sourceTree = "<group>"; };
 		F9D3A3C719D8C0820000AD34 /* Currently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currently.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D3A3CB19D8C0820000AD34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9D3A3CC19D8C0820000AD34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 		F9BFD44A19F0AD4200E55E9A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F9BFD47F19F5EE8900E55E9A /* activity-active@2x.png */,
 				F9BFD47D19F5E77D00E55E9A /* text@2x.png */,
 				F9BFD47919F5E06800E55E9A /* activity@2x.png */,
 				F9BFD47A19F5E06800E55E9A /* location@2x.png */,
@@ -431,6 +434,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9BFD48019F5EE8900E55E9A /* activity-active@2x.png in Resources */,
 				F9EA4A0F19D8C3C100AC2CFF /* Gotham-Bold.ttf in Resources */,
 				F9BFD44C19F0AE9B00E55E9A /* settings@2x.png in Resources */,
 				F9EA4A1019D8C3C100AC2CFF /* Gotham-Book.ttf in Resources */,
