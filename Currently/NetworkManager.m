@@ -20,11 +20,11 @@
 @implementation NetworkManager
 
 static NetworkManager *instance = nil;
-//#ifdef DEBUG
-//NSString *serverURL = @"http://currently-test.herokuapp.com";
-//#else
-NSString *serverURL = @"http://currently-data.herokuapp.com";
-//#endif
+#ifdef DEBUG
+    NSString *serverURL = @"http://currently-test.herokuapp.com";
+#else
+    NSString *serverURL = @"http://currently-data.herokuapp.com";
+#endif
 
 + (NetworkManager *) getInstance
 {

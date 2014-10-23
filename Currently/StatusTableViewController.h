@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UpdateTableViewController.h"
+#import "UpdateController.h"
 
 @interface StatusTableViewController : UITableViewController <StatusUpdatedProtocol>
 

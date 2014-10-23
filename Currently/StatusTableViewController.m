@@ -172,28 +172,25 @@
     }
     
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
-    NSDictionary *mediumAttribute = @{NSFontAttributeName: [UIFont fontWithName:@"Gotham-Medium" size:16.0f]};
-    NSDictionary *bookAttribute = @{NSFontAttributeName: [UIFont fontWithName:@"Gotham-Book" size:16.0f]};
-    NSDictionary *timeAttribute = @{NSFontAttributeName: [UIFont fontWithName:@"Gotham-Book" size:13.0f], NSForegroundColorAttributeName: [UIColor grayColor]};
+    NSDictionary *mediumAttribute = @{NSFontAttributeName: [UIFont fontWithName:@"Gotham-Medium" size:17.0f]};
+    NSDictionary *bookAttribute = @{NSFontAttributeName: [UIFont fontWithName:@"Gotham-Book" size:17.0f]};
+    NSDictionary *grayBookAttribute = @{NSFontAttributeName: [UIFont fontWithName:@"Gotham-Book" size:17.0f], NSForegroundColorAttributeName: [UIColor grayColor]};
+    NSDictionary *timeAttribute = @{NSFontAttributeName: [UIFont fontWithName:@"Gotham-Book" size:12.0f], NSForegroundColorAttributeName: [UIColor grayColor]};
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineSpacing:5.0f];
 
     NSString *myName = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"name"];
     NSAttributedString *name = [[NSAttributedString alloc] initWithString:myName attributes:mediumAttribute];
     [attrString appendAttributedString:name];
-    NSAttributedString *is = [[NSAttributedString alloc] initWithString:@" is " attributes:bookAttribute];
-    [attrString appendAttributedString:is];
+//    NSAttributedString *is = [[NSAttributedString alloc] initWithString:@" " attributes:bookAttribute];
+//    [attrString appendAttributedString:is];
  
-    NSString *myVerb = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"verb"];
-    if(myVerb.length > 0){
-        NSAttributedString *verb = [[NSAttributedString alloc] initWithString:myVerb attributes:bookAttribute];
-        [attrString appendAttributedString:verb];
+    NSString *myActivity = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"activity"];
+    if(myActivity.length > 0){
+        NSAttributedString *activity = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", [myActivity lowercaseString]] attributes:mediumAttribute];
+        [attrString appendAttributedString:activity];
     }
-    NSString *myNoun = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"noun"];
-    if(myNoun.length > 0){
-        NSAttributedString *noun = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", myNoun] attributes:mediumAttribute];
-        [attrString appendAttributedString:noun];
-    }
+    
     NSString *myLocation = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"location"];
     if(myLocation.length > 0){
         NSAttributedString *at = [[NSAttributedString alloc] initWithString:@" at " attributes:bookAttribute];
@@ -201,6 +198,12 @@
 
         NSAttributedString *location = [[NSAttributedString alloc] initWithString:myLocation attributes:mediumAttribute];
         [attrString appendAttributedString:location];
+    }
+    
+    NSString *myNote = [[self.profileData objectAtIndex:indexPath.row] objectForKey:@"note"];
+    if(myNote.length > 0){
+        NSAttributedString *note = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", myNote] attributes:grayBookAttribute];
+        [attrString appendAttributedString:note];
     }
     
     [attrString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [attrString.string length])];

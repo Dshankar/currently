@@ -14,14 +14,14 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.profile = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
+        self.profile = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
         [self addSubview:self.profile];
         
-        self.status = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 190, 60)];
+        self.status = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 210, 60)];
         [self.status setNumberOfLines:2];
         [self addSubview:self.status];
         
-        self.time = [[UILabel alloc] initWithFrame:CGRectMake(250, 0, 60, 60)];
+        self.time = [[UILabel alloc] initWithFrame:CGRectMake(280, 0, 35, 60)];
         [self.time setTextAlignment:NSTextAlignmentRight];
         [self addSubview:self.time];
         

@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonStatusTableViewController.h"
 
 @protocol StatusUpdatedProtocol <NSObject>
 @required
 - (void)statusHasUpdated;
 @end
 
-@interface UpdateController : UIViewController
+@interface UpdateController : UIViewController <CommonStatusProtocol>
 
 @property (nonatomic) id <StatusUpdatedProtocol>delegate;
 @property (nonatomic, retain) UITextField *note;
