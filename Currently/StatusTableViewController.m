@@ -17,6 +17,7 @@
 #import "LoginController.h"
 #import "NetworkManager.h"
 #import "AddFriendController.h"
+#import "DataManager.h"
 
 @interface StatusTableViewController ()
 {
@@ -26,10 +27,11 @@
 
 @implementation StatusTableViewController
 
-- (id) initWithProfileData:(NSArray *)data{
+- (id) initWithData:(NSDictionary *)data{
     self = [super initWithStyle:UITableViewStylePlain];
     if(self){
-        self.profileData = data;
+        self.profileData = [data objectForKey:@"friends"];
+        self.myData = [data objectForKey:@"me"];
     }
     return self;
 }
@@ -56,9 +58,7 @@
     [self.tableView registerClass:[UserCell class] forCellReuseIdentifier:@"UserCell"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
+    
     [self registerForNotifications];
 }
 
@@ -74,7 +74,6 @@
         [application registerForRemoteNotificationTypes:myTypes];
     }
 }
-
 
 - (void)registerEngagement:(NSString *)userAction {
 #ifndef DEBUG
@@ -93,7 +92,7 @@
 }
 
 - (void)showAddFriend:(id)sender{
-    AddFriendController *addFriendController = [[AddFriendController alloc] initWithStyle:UITableViewStyleGrouped];
+    AddFriendController *addFriendController = [[AddFriendController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *addFriendNav = [[UINavigationController alloc] initWithRootViewController:addFriendController];
     [self.navigationController presentViewController:addFriendNav animated:YES completion:nil];
 }
@@ -107,36 +106,48 @@
 }
 
 - (void)statusHasUpdated {
-    [self updateData];
+    [self.dataManager updateData];
     [self registerEngagement:@"updated_status"];
 }
 
 - (void)applicationActive:(id)sender {
-    [self updateData];
+//    [self updateData];
+    NSLog(@"application active, registering opened app");
     [self registerEngagement:@"opened_app"];
 }
 
-- (void) updateData {
-    NetworkManager *manager = [NetworkManager getInstance];
-    
-    [manager getLatestDataWithCompletionHandler:^(int code, NSError *error, NSArray *data) {
-        if(error == nil){
-            self.profileData = data;
-            [self.tableView reloadData];
-        } else if(code == 401 || error.code == -1012){
-            NSLog(@"Status getLatestData error 401/-1012");
-            [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
-                if(refreshCode == 200){
-                    [self updateData];
-                } else if(refreshCode == 403 || refreshError){
-                    LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
-                    login.shouldDismissOnSuccess = YES;
-                    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
-                    [self presentViewController:loginNav animated:YES completion:nil];
-                }
-            }];
-        }
-    }];
+//- (void) updateData {
+//    NetworkManager *manager = [NetworkManager getInstance];
+//    
+//    [manager getLatestDataWithCompletionHandler:^(int code, NSError *error, NSDictionary *data) {
+//        if(error == nil){
+//            self.profileData = [data objectForKey:@"friends"];
+//            self.myData = [data objectForKey:@"me"];
+//            int pendingRequests = [[self.myData objectForKey:@"requests"] count];
+//            [[self.tabBarController.toolbarItems objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%i", pendingRequests]];
+//            [self.tableView reloadData];
+//        } else if(code == 401 || error.code == -1012){
+//            NSLog(@"Status getLatestData error 401/-1012");
+//            [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
+//                if(refreshCode == 200){
+//                    [self updateData];
+//                } else if(refreshCode == 403 || refreshError){
+//                    LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
+//                    login.delegate = self;
+//                    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
+//                    [self presentViewController:loginNav animated:YES completion:nil];
+//                }
+//            }];
+//        }
+//    }];
+//}
+
+//- (void) successfulAuthentication {
+//    [self updateData];
+//}
+
+- (void) dataSourceHasUpdated {
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

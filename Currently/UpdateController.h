@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonStatusTableViewController.h"
+#import "SplashViewController.h"
 
 @protocol StatusUpdatedProtocol <NSObject>
 @required
 - (void)statusHasUpdated;
 @end
 
-@interface UpdateController : UIViewController <CommonStatusProtocol>
+@interface UpdateController : UIViewController <CommonStatusProtocol, AuthenticationCompletionProtocol>
 
 @property (nonatomic) id <StatusUpdatedProtocol>delegate;
 @property (nonatomic, retain) UITextField *note;

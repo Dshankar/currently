@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SplashViewController.h"
 
 @interface LoginController : UITableViewController
 
-@property (nonatomic) BOOL shouldDismissOnSuccess;
+@property (nonatomic) id<AuthenticationCompletionProtocol> delegate;
 
 @end

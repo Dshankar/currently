@@ -14,6 +14,7 @@
 #import "InvitesTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "NotificationsController.h"
+#import "DataManager.h"
 
 @interface SplashViewController ()
 
@@ -23,43 +24,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:@"Welcome"];
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    NetworkManager *manager = [NetworkManager new];
-    NetworkManager *manager = [NetworkManager getInstance];
     
     if ([defaults objectForKey:@"accesstoken"]) {
-        [manager getLatestDataWithCompletionHandler:^(int code, NSError *error, NSArray *data) {
-            if(error == nil){
-                NSLog(@"getLatestData OK %i", code);
-                [self showStatusesWithData:data];
-            } else if(code == 401 || error.code == -1012){
-                NSLog(@"getLatestData error 401/-1012");
-                [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
-                    if (refreshCode == 200) {
-                        [self showStatusesWithData:data];
-                    } else {
-                        [self displayLoginOrSignup];
-                    }
-                }];
-            } else {
-                NSLog(@"getLatestData error");
-                // what about non-authentication errors? server down etc.
-                [self displayLoginOrSignup];
-            }
-        }];
+        [self getLatestData];
     } else {
         NSLog(@"No accesstoken stored");
         [self displayLoginOrSignup];
     }
 }
 
-- (void)showStatusesWithData:(NSArray *)data {
-    StatusTableViewController *status = [[StatusTableViewController alloc] initWithProfileData:data];
+- (void)getLatestData {
+    NetworkManager *manager = [NetworkManager getInstance];
+    [manager getLatestDataWithCompletionHandler:^(int code, NSError *error, NSDictionary *data) {
+        if(error == nil){
+            NSLog(@"getLatestData OK %i", code);
+            [self showStatusesWithData:data];
+        } else if(code == 401 || error.code == -1012){
+            NSLog(@"getLatestData error 401/-1012");
+            [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
+                if (refreshCode == 200) {
+                    [self showStatusesWithData:data];
+                } else {
+                    [self displayLoginOrSignup];
+                }
+            }];
+        } else {
+            NSLog(@"getLatestData error");
+            // what about non-authentication errors? server down etc.
+            [self displayLoginOrSignup];
+        }
+    }];
+}
+
+- (void)showStatusesWithData:(NSDictionary *)data {
+    StatusTableViewController *status = [[StatusTableViewController alloc] initWithData:data];
     UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:status];
     
-    InvitesTableViewController *pendingInvites = [[InvitesTableViewController alloc] initWithNibName:nil bundle:nil];
+    NSArray *friendRequests = [[data objectForKey:@"me"] objectForKey:@"requests"];
+    InvitesTableViewController *pendingInvites = [[InvitesTableViewController alloc] initWithRequests:friendRequests];
     UINavigationController *nav2 = [[UINavigationController alloc] initWithRootViewController:pendingInvites];
     
     NotificationsController *notifications = [[NotificationsController alloc] init];
@@ -78,8 +81,10 @@
     
     UITabBarItem *statusItem = [[UITabBarItem alloc] initWithTitle:@"Feed" image:feedImage tag:1];
     UITabBarItem *pendingInvitesItem = [[UITabBarItem alloc] initWithTitle:@"Requests" image:groupImage tag:2];
+    if(friendRequests.count > 0){
+        [pendingInvitesItem setBadgeValue:[NSString stringWithFormat:@"%i", friendRequests.count]];
+    }
     UITabBarItem *notificationsItem = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationsImage tag:3];
-    [notificationsItem setBadgeValue:@"1"];
     UITabBarItem *settingsItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage tag:4];
     
     [tabBar setToolbarItems:@[statusItem, pendingInvitesItem, notificationsItem, settingsItem]];
@@ -91,6 +96,10 @@
     nav2.tabBarItem = pendingInvitesItem;
     nav3.tabBarItem = notificationsItem;
     nav4.tabBarItem = settingsItem;
+    
+    DataManager *dataManager = [[DataManager alloc] initWithControllers:[NSArray arrayWithObjects:tabBar, status, pendingInvites, notifications, nil]];
+    status.dataManager = dataManager;
+    pendingInvites.dataManager = dataManager;
 
     [self presentViewController:tabBar animated:YES completion:nil];
 }
@@ -113,12 +122,20 @@
 
 - (void)showLogin:(id)sender {
     LoginController *login = [[LoginController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:login animated:YES];
+    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
+    login.delegate = self;
+    [self presentViewController:loginNav animated:YES completion:nil];
 }
 
 - (void)showSignup:(id)sender {
     SignupController *signup = [[SignupController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:signup animated:YES];
+    UINavigationController *signupNav = [[UINavigationController alloc] initWithRootViewController:signup];
+    signup.delegate = self;
+    [self presentViewController:signupNav animated:YES completion:nil];
+}
+
+- (void)successfulAuthentication {
+    [self getLatestData];
 }
 
 @end

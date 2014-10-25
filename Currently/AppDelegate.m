@@ -28,8 +28,7 @@
 //            [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     SplashViewController *splash = [[SplashViewController alloc] initWithNibName:nil bundle:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:splash];
-    self.window.rootViewController = nav;
+    self.window.rootViewController = splash;
     [self.window makeKeyAndVisible];
     
 #ifndef DEBUG

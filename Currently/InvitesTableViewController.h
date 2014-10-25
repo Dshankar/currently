@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SplashViewController.h"
 
-@interface InvitesTableViewController : UITableViewController
+@class DataManager;
+
+typedef enum : NSUInteger {
+    FriendRequestActionTypeAccept,
+    FriendRequestActionTypeDecline
+} FriendRequestActionType;
+
+
+@interface InvitesTableViewController : UITableViewController <AuthenticationCompletionProtocol>
+
+- (id) initWithRequests:(NSArray *)requestData;
+- (void) dataSourceHasUpdated;
+@property (nonatomic, retain) NSArray *requests;
+@property (nonatomic, retain) DataManager *dataManager;
 
 @end

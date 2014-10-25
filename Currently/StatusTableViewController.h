@@ -8,12 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "UpdateController.h"
+#import "SplashViewController.h"
+
+@class DataManager;
 
 @interface StatusTableViewController : UITableViewController <StatusUpdatedProtocol>
 
 @property (nonatomic, retain) NSArray *profileData;
+@property (nonatomic, retain) NSDictionary *myData;
+@property (nonatomic, retain) DataManager *dataManager;
 
-- (id) initWithProfileData:(NSArray *)data;
-- (void)applicationActive:(id)sender;
-    
+- (id) initWithData:(NSDictionary *)data;
+- (void) applicationActive:(id)sender;
+- (void) dataSourceHasUpdated;
+
 @end

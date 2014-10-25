@@ -49,14 +49,8 @@
                     [defaults synchronize];
                     
                     // TODO if successfully logged in after a newly registered user, show onboarding flow
-                    [manager getLatestDataWithCompletionHandler:^(int dataCode, NSError *dataError, NSArray *data) {
-                        if(dataError == nil){
-                            StatusTableViewController *status = [[StatusTableViewController alloc] initWithProfileData:data];
-                            [self.navigationController pushViewController:status animated:YES];
-                        } else {
-                            NSLog(@"Error getting latest data for newly registered user, code %i, with Error:\n%@", dataCode, dataError);
-                        }
-                     }];
+                    [self.delegate successfulAuthentication];
+                    [self dismissViewControllerAnimated:YES completion:nil];
                 } else if(loginError){
                     // TODO if login error?
                     NSLog(@"Error logging in with newly registered user, with Error:\n%@", loginError);

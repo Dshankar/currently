@@ -16,6 +16,7 @@
 
 
 #import "NetworkManager.h"
+#import "InvitesTableViewController.h"
 
 @implementation NetworkManager
 
@@ -75,7 +76,7 @@ static NetworkManager *instance = nil;
     }];
 }
 
-- (void) getLatestDataWithCompletionHandler: (void (^)(int code, NSError* error, NSArray* data)) handler{
+- (void) getLatestDataWithCompletionHandler: (void (^)(int code, NSError* error, NSDictionary *data)) handler{
     NSLog(@"NMGetLatestData");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
@@ -92,7 +93,7 @@ static NetworkManager *instance = nil;
         if(error){
             handler(code, error, nil);
         } else {
-            NSArray *serializedData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
             handler(code, nil, serializedData);
         }
     }];
@@ -113,7 +114,70 @@ static NetworkManager *instance = nil;
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPBody:jsonData];
     
-//    NSOperationQueue *queue = [NSOperationQueue new];
+    [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        int code = ((NSHTTPURLResponse *)response).statusCode;
+        if(error){
+            handler(code, error);
+        } else {
+            handler(code, nil);
+        }
+    }];
+}
+
+- (void) sendFriendRequest:(NSString *)username completionHandler: (void (^)(int code, NSError* error)) handler{
+    NSLog(@"NMSendFriendRequest");
+    NSMutableDictionary *data = [NSMutableDictionary new];
+    [data setObject:username forKey:@"username"];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:[NSString pathWithComponents:@[serverURL, @"requestfriend"]]]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:jsonData];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        int code = ((NSHTTPURLResponse *)response).statusCode;
+        NSLog(@"response: \n\n\n\n%@\n\n\n", ((NSHTTPURLResponse *)response));
+        NSLog(@"response data: \n\n\n\n%@\n\n\n", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+        NSLog(@"response error: \n\n\n%@\n\n", [error localizedDescription]);
+        if(error){
+            handler(code, error);
+        } else {
+            handler(code, nil);
+        }
+    }];
+}
+
+- (void) sendAction:(FriendRequestActionType)action forFriendRequestFrom:(NSString *)username completionHandler: (void (^)(int code, NSError*error)) handler{
+    NSLog(@"NMAcceptOrDeclineFriendRequest");
+    NSMutableDictionary *data = [NSMutableDictionary new];
+    [data setObject:username forKey:@"username"];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:kNilOptions error:nil];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [NSString stringWithFormat:@"Bearer %@", [defaults objectForKey:@"accesstoken"]];
+    
+    NSString *actionParameter;
+    if(action == FriendRequestActionTypeAccept) {
+        actionParameter = @"acceptfriend";
+    } else if(action == FriendRequestActionTypeDecline) {
+        actionParameter = @"declinefriend";
+    }
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:[NSString pathWithComponents:@[serverURL, actionParameter]]]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:token forHTTPHeaderField:@"Authorization"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:jsonData];
+    
     [NSURLConnection sendAsynchronousRequest:request queue:instance.opqueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         int code = ((NSHTTPURLResponse *)response).statusCode;
         if(error){

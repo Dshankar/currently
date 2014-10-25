@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SplashViewController.h"
 
-@interface AddFriendController : UITableViewController
+@interface AddFriendController : UIViewController <AuthenticationCompletionProtocol>
 
 @end

@@ -200,13 +200,17 @@
                     [self publishUpdatedStatus:data];
                 } else if(refreshCode == 403 || refreshError){
                     LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
-                    login.shouldDismissOnSuccess = YES;
+                    login.delegate = self;
                     UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
                     [self presentViewController:loginNav animated:YES completion:nil];
                 }
             }];
         }
     }];
+}
+
+- (void)successfulAuthentication {
+    [self updateStatus:nil];
 }
 
 @end

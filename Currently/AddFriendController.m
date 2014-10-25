@@ -7,10 +7,13 @@
 //
 
 #import "AddFriendController.h"
-#import "LoginCredentialCell.h"
+#import "NetworkManager.h"
+#import "LoginController.h"
 
 @interface AddFriendController ()
-
+{
+    UITextField *textField;
+}
 @end
 
 @implementation AddFriendController
@@ -18,17 +21,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[LoginCredentialCell class] forCellReuseIdentifier:@"AddFriendCell"];
-    
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Friend" style:UIBarButtonItemStyleDone target:self action:@selector(addFriend:)];
     [self.navigationItem setRightBarButtonItem:addButton];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(dismissView:)];
     [self.navigationItem setLeftBarButtonItem:cancelButton];
+    
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 100, self.view.bounds.size.width-40, 70)];
+    [textField setPlaceholder:@"Username"];
+    [textField setFont:[UIFont fontWithName:@"Gotham-Book" size:16.0]];
+    [self.view addSubview:textField];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    LoginCredentialCell *cell = (LoginCredentialCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [cell.textField becomeFirstResponder];
+    [textField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,79 +43,43 @@
 }
 
 - (void)dismissView:(id)sender {
-    LoginCredentialCell *cell = (LoginCredentialCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [cell.textField resignFirstResponder];
+    [textField resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)addFriend:(id)sender {
-    
+    [self sendFriendRequest:textField.text];
 }
 
-#pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+- (void)sendFriendRequest:(NSString *)username {
+    NetworkManager *manager = [NetworkManager getInstance];
+    [manager sendFriendRequest:username completionHandler:^(int code, NSError *error) {
+        if(code == 400) {
+//            NSLog(@"error sendFriendRequest HTTP %i with Error\n%@", code, error);
+        } else if(code == 500) {
+//            NSLog(@"error sendFriendRequest HTTP %i with Error\n%@", code, error);            
+        } else if(code == 401 || error.code == -1012){
+            NSLog(@"Update updateStatus error 401/-1012");
+            [manager refreshTokensWithCompletionHandler:^(int refreshCode, NSError *refreshError) {
+                if(refreshCode == 200){
+                    [self sendFriendRequest:username];
+                } else if(refreshCode == 403 || refreshError){
+                    LoginController *login = [[LoginController alloc] initWithNibName:nil bundle:nil];
+                    login.delegate = self;
+                    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:login];
+                    [self presentViewController:loginNav animated:YES completion:nil];
+                }
+            }];
+        } else if(code == 200 || error == nil){
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+- (void)successfulAuthentication {
+    [self addFriend:nil];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"Add a friend by entering their username";
-}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LoginCredentialCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddFriendCell"];
-    if(cell == nil){
-        cell = [[LoginCredentialCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddFriendCell"];
-    }
-    cell.label.text = @"Username";
-    return cell;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

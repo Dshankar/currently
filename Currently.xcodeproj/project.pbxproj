@@ -34,6 +34,9 @@
 		F9BFD49819F6389800E55E9A /* location-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD49719F6389800E55E9A /* location-active@2x.png */; };
 		F9BFD49E19F720C500E55E9A /* CommonStatusTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD49D19F720C500E55E9A /* CommonStatusTableViewController.m */; };
 		F9BFD4A019F7339000E55E9A /* cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD49F19F7339000E55E9A /* cancel@2x.png */; };
+		F9BFD4A319F9FC1E00E55E9A /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD4A219F9FC1E00E55E9A /* DataManager.m */; };
+		F9BFD4A519FB0F3F00E55E9A /* confirm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9BFD4A419FB0F3F00E55E9A /* confirm@2x.png */; };
+		F9BFD4A819FB0F5B00E55E9A /* FriendRequestsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFD4A719FB0F5B00E55E9A /* FriendRequestsTableViewCell.m */; };
 		F9D3A3CD19D8C0820000AD34 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CC19D8C0820000AD34 /* main.m */; };
 		F9D3A3D019D8C0820000AD34 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D3A3CF19D8C0820000AD34 /* AppDelegate.m */; };
 		F9D3A3D819D8C0820000AD34 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D3A3D719D8C0820000AD34 /* Images.xcassets */; };
@@ -108,6 +111,11 @@
 		F9BFD49C19F720C500E55E9A /* CommonStatusTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonStatusTableViewController.h; sourceTree = "<group>"; };
 		F9BFD49D19F720C500E55E9A /* CommonStatusTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonStatusTableViewController.m; sourceTree = "<group>"; };
 		F9BFD49F19F7339000E55E9A /* cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cancel@2x.png"; path = "Images/cancel@2x.png"; sourceTree = "<group>"; };
+		F9BFD4A119F9FC1E00E55E9A /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		F9BFD4A219F9FC1E00E55E9A /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		F9BFD4A419FB0F3F00E55E9A /* confirm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirm@2x.png"; sourceTree = "<group>"; };
+		F9BFD4A619FB0F5B00E55E9A /* FriendRequestsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRequestsTableViewCell.h; sourceTree = "<group>"; };
+		F9BFD4A719FB0F5B00E55E9A /* FriendRequestsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRequestsTableViewCell.m; sourceTree = "<group>"; };
 		F9D3A3C719D8C0820000AD34 /* Currently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Currently.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D3A3CB19D8C0820000AD34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9D3A3CC19D8C0820000AD34 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -158,6 +166,8 @@
 			children = (
 				F914DA2A19EBD29200467A49 /* NetworkManager.h */,
 				F914DA2B19EBD29200467A49 /* NetworkManager.m */,
+				F9BFD4A119F9FC1E00E55E9A /* DataManager.h */,
+				F9BFD4A219F9FC1E00E55E9A /* DataManager.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -220,6 +230,8 @@
 			children = (
 				F9BFD45319F1CA8D00E55E9A /* InvitesTableViewController.h */,
 				F9BFD45419F1CA8D00E55E9A /* InvitesTableViewController.m */,
+				F9BFD4A619FB0F5B00E55E9A /* FriendRequestsTableViewCell.h */,
+				F9BFD4A719FB0F5B00E55E9A /* FriendRequestsTableViewCell.m */,
 				F9BFD46B19F47E5E00E55E9A /* AddFriendController.h */,
 				F9BFD46C19F47E5E00E55E9A /* AddFriendController.m */,
 			);
@@ -251,6 +263,7 @@
 				F9BFD48219F6384B00E55E9A /* activity-active@2x.png */,
 				F9BFD48419F6384B00E55E9A /* addfriend@2x.png */,
 				F9BFD49F19F7339000E55E9A /* cancel@2x.png */,
+				F9BFD4A419FB0F3F00E55E9A /* confirm@2x.png */,
 				F9BFD48519F6384B00E55E9A /* edit@2x.png */,
 				F9BFD48619F6384B00E55E9A /* feed@2x.png */,
 				F9BFD48719F6384B00E55E9A /* group@2x.png */,
@@ -455,6 +468,7 @@
 				F9BFD48C19F6384B00E55E9A /* activity-active@2x.png in Resources */,
 				F9BFD4A019F7339000E55E9A /* cancel@2x.png in Resources */,
 				F9EA4A0E19D8C3C100AC2CFF /* Gotham-Black.ttf in Resources */,
+				F9BFD4A519FB0F3F00E55E9A /* confirm@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9BFD45B19F3304400E55E9A /* SettingsTableViewController.m in Sources */,
+				F9BFD4A819FB0F5B00E55E9A /* FriendRequestsTableViewCell.m in Sources */,
 				F9BFD46D19F47E5E00E55E9A /* AddFriendController.m in Sources */,
 				F9EA4A1C19D8C9BC00AC2CFF /* UserCell.m in Sources */,
 				F9BFD46919F47ABC00E55E9A /* NotificationsController.m in Sources */,
@@ -502,6 +517,7 @@
 				F9D3A3CD19D8C0820000AD34 /* main.m in Sources */,
 				F9BFD43519F09F7800E55E9A /* SplashViewController.m in Sources */,
 				F9BFD43419F09F7800E55E9A /* SignupController.m in Sources */,
+				F9BFD4A319F9FC1E00E55E9A /* DataManager.m in Sources */,
 				F914DA2C19EBD29200467A49 /* NetworkManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

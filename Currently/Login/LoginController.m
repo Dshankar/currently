@@ -36,7 +36,6 @@
     LoginCredentialCell *username = (LoginCredentialCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     LoginCredentialCell *password = (LoginCredentialCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     
-    //    NetworkManager *manager = [NetworkManager new];
     NetworkManager *manager = [NetworkManager getInstance];
     
     [manager loginWithUsername:username.textField.text password:password.textField.text completionHandler:^(int code, NSError *error) {
@@ -46,18 +45,9 @@
             [defaults setObject:username.textField.text forKey:@"username"];
             [defaults setObject:password.textField.text forKey:@"password"];
             [defaults synchronize];
-            
-            if(self.shouldDismissOnSuccess){
-                [self dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                StatusTableViewController *status = [[StatusTableViewController alloc] initWithNibName:nil bundle:nil];
-                // consider calling getLatestData and instantiating
-                // StatusTableViewController with profile data
-                // user will immediately see their feed, instead of
-                // briefly seeing a blank page
-                [status applicationActive:nil];
-                [self.navigationController pushViewController:status animated:YES];
-            }
+
+            [self.delegate successfulAuthentication];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }  // TODO if login error?
     }];
 }

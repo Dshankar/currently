@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SplashViewController.h"
 
 @interface SignupController : UITableViewController
+
+@property (nonatomic) id<AuthenticationCompletionProtocol> delegate;
 
 @end

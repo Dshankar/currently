@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SplashViewController : UIViewController
+@protocol AuthenticationCompletionProtocol <NSObject>
+
+@required -(void)successfulAuthentication;
+
+@end
+
+@interface SplashViewController : UIViewController <AuthenticationCompletionProtocol>
 
 @end

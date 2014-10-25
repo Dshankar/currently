@@ -23,4 +23,8 @@
     [self.view addSubview:comingSoon];
 }
 
+- (void) dataSourceHasUpdated {
+    
+}
+
 @end
